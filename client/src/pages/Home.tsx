@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, Fragment } from "react";
 import type { CSSProperties, MouseEvent } from "react";
 import { WorksWheel, type WorksWheelItem } from "@/components/ui/works-wheel";
+import FlowArt, { FlowSection } from "@/components/ui/story-scroll";
 
 const WORKS: WorksWheelItem[] = [
   { title: "Projeto 01", image: "/works/img_componente_1.jpg" },
@@ -142,20 +143,110 @@ export default function Home() {
         label="Meus Trabalhos"
         className="h-[100svh] min-h-[100svh]"
       />
-      <section
-        id="quem-eu-sou"
-        aria-labelledby="quem-eu-sou-title"
-        className="min-h-[100svh] w-full bg-black text-white"
-      >
-        <div className="mx-auto max-w-5xl px-6 py-24">
-          <h2
-            id="quem-eu-sou-title"
-            className="text-4xl font-semibold tracking-tight md:text-6xl"
-          >
-            Quem eu sou
-          </h2>
-        </div>
-      </section>
+      <FlowArt aria-label="Sobre mim">
+        {/* Secção 1: Headline forte / Quem sou */}
+        <FlowSection aria-label="Quem sou" style={{ backgroundColor: '#000000', color: '#ffffff' }}>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-70">01 — Quem sou</p>
+          <hr className="my-[2vw] border-none border-t border-white/20" />
+          <div>
+            <h1 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
+              Transformo<br />ideias em<br />software. 🚀
+            </h1>
+          </div>
+          <hr className="my-[2vw] border-none border-t border-white/20" />
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <p className="max-w-[50ch] text-[clamp(1rem,1.5vw,1.25rem)] font-normal leading-relaxed opacity-90">
+              Sou o Atlas, dev web e arquiteto de IA, obcecado por transformar ideias em soluções reais. 
+              Trabalho na interseção entre Inteligência Artificial, Desenvolvimento Web, UI/UX e Automação.
+            </p>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="rounded-full bg-white px-6 py-3 text-sm font-bold text-black transition hover:bg-gray-200">
+                Ver projetos no GitHub
+              </a>
+              <a href="#contact" className="rounded-full border border-white/30 px-6 py-3 text-sm font-bold text-white transition hover:bg-white/10">
+                Bora tirar a tua ideia do papel?
+              </a>
+            </div>
+          </div>
+        </FlowSection>
+
+        {/* Secção 2: Por quê eu? */}
+        <FlowSection aria-label="Diferencial" style={{ backgroundColor: '#ffffff', color: '#000000' }}>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-70">02 — Diferencial</p>
+          <hr className="my-[2vw] border-none border-t border-black/20" />
+          <div>
+            <h2 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
+              Por quê<br />eu?
+            </h2>
+          </div>
+          <hr className="my-[2vw] border-none border-t border-black/20" />
+          <div className="flex flex-wrap gap-[3vw]">
+            <div className="min-w-[250px] flex-1">
+              <p className="mb-2 text-sm font-bold uppercase tracking-wider">Arquiteto de Soluções</p>
+              <p className="text-[clamp(0.9rem,1.2vw,1.1rem)] leading-relaxed opacity-75">
+                Não sou só developer. Penso no sistema como um todo, desde a UI/UX até à arquitetura de IA. 
+                Junto a isso, a automação para que tudo funcione sem fricção.
+              </p>
+            </div>
+            <div className="min-w-[250px] flex-1">
+              <p className="mb-2 text-sm font-bold uppercase tracking-wider">Design Premium</p>
+              <p className="text-[clamp(0.9rem,1.2vw,1.1rem)] leading-relaxed opacity-75">
+                Além do meu gosto incrível em design, não faço sites "normais". Todos são focados em ser premium, 
+                tal como o meu próprio portfólio. Entrego pensamento estratégico aplicado.
+              </p>
+            </div>
+          </div>
+        </FlowSection>
+
+        {/* Secção 3: Design + Desenvolvimento (Com foto pessoal) */}
+        <FlowSection aria-label="Processo" style={{ backgroundColor: '#111111', color: '#ffffff' }}>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-70">03 — Processo</p>
+          <hr className="my-[2vw] border-none border-t border-white/20" />
+          <div>
+            <h2 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
+              Design +<br />Dev
+            </h2>
+          </div>
+          <hr className="my-[2vw] border-none border-t border-white/20" />
+          <p className="max-w-[50ch] text-[clamp(1rem,1.5vw,1.25rem)] font-normal leading-relaxed opacity-90">
+            Acredito que um bom produto nasce do equilíbrio entre forma e função. 
+            Design e desenvolvimento não são etapas separadas no meu processo, são a mesma conversa.
+          </p>
+          <hr className="my-[2vw] border-none border-t border-white/20" />
+          <div className="mt-auto grid gap-6 md:grid-cols-2 md:items-end">
+            <div className="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+              <p className="text-sm italic opacity-75">
+                "Nos bastidores: onde as ideias viram protótipos, e os protótipos viram produtos."
+              </p>
+            </div>
+            <div className="relative overflow-hidden rounded-xl border border-white/10">
+              <img
+                src="/minha_foto.jpeg"
+                alt="Atlas nos bastidores do trabalho"
+                className="h-[300px] w-full object-cover md:h-[400px]"
+              />
+            </div>
+          </div>
+        </FlowSection>
+
+        {/* Secção 4: Pequena história */}
+        <FlowSection aria-label="História" style={{ backgroundColor: '#ffffff', color: '#000000' }}>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-70">04 — Jornada</p>
+          <hr className="my-[2vw] border-none border-t border-black/20" />
+          <div>
+            <h2 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
+              A minha<br />história
+            </h2>
+          </div>
+          <hr className="my-[2vw] border-none border-t border-black/20" />
+          <p className="max-w-[60ch] text-[clamp(1rem,1.5vw,1.25rem)] font-normal leading-relaxed opacity-90">
+            Comecei como muita gente começa: curioso, a tentar perceber como as coisas funcionam por trás do ecrã. 
+            Essa curiosidade virou estudo, o estudo virou prática, e a prática virou uma missão: usar tecnologia e IA 
+            para resolver problemas reais, em Angola e além. Hoje, cada projeto público que construo é um pedaço 
+            dessa jornada, partilhado abertamente para quem quiser aprender ou colaborar.
+          </p>
+        </FlowSection>
+      </FlowArt>
     </>
   );
 }
