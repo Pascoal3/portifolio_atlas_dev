@@ -11,7 +11,7 @@ const WORKS: WorksWheelItem[] = [
   { title: "Projeto 06", image: "/works/img_componente_6.jpg" },
   { title: "Projeto 07", image: "/works/img_componente_7.jpg" },
   { title: "Projeto 08", image: "/works/img_componente_8.jpg" },
-  { title: "Projeto 09", image: "/works/img_componente_9.jpg" },
+  { title: "Quem eu sou", image: "/works/img_componente_9.jpg" },
 ];
 
 const navItems = [
@@ -139,7 +139,7 @@ export default function Home() {
       <WorksWheel
         id="works-wheel-section"
         items={WORKS}
-        label="Trabalhos"
+        label="Meus Trabalhos"
         className="h-[100svh]"
       />
     </>

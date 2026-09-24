@@ -74,6 +74,10 @@ export function WorksWheel({
   const cardRefs = React.useRef<(HTMLElement | null)[]>([]);
   const labelRef = React.useRef<HTMLDivElement>(null);
   const titleRef = React.useRef<HTMLDivElement>(null);
+  const takeoverLayerRef = React.useRef<HTMLDivElement>(null);
+  const takeoverCardRef = React.useRef<HTMLDivElement>(null);
+  const takeoverTitleRef = React.useRef<HTMLDivElement>(null);
+  const indexRef = React.useRef<HTMLOListElement>(null);
 
   const turn = React.useRef(0);
   const target = React.useRef(0);
@@ -82,6 +86,7 @@ export function WorksWheel({
 
   const count = items.length;
   const last = Math.max(count - 1, 0);
+  const END = last + 2; // last+1 = last item, last+2 = takeover complete
 
   const [reduced, setReduced] = React.useState(false);
   React.useEffect(() => {
@@ -137,7 +142,9 @@ export function WorksWheel({
 
       const t = turn.current;
       const m = clamp(t, 0, 1);
-      const pos = Math.max(0, t - 1);
+      const posRaw = Math.max(0, t - 1);
+      const pos = clamp(posRaw, 0, last);             // lock wheel at last item
+      const takeover = clamp(posRaw - last, 0, 1);    // 0..1 after last item
 
       if (wheelRef.current) {
         wheelRef.current.style.transform = `translateZ(${-m * drumR}px)`;
@@ -156,15 +163,42 @@ export function WorksWheel({
             bow,
             m,
           );
-          card.style.opacity = m > 0.5 && Math.abs(d) > CULL ? "0" : "1";
+          // base opacity
+          let opacity = m > 0.5 && Math.abs(d) > CULL ? "0" : "1";
+          if (takeover > 0) {
+            if (i === last) opacity = String(1 - takeover);
+            else opacity = "0";
+          }
+          card.style.opacity = opacity;
           card.style.zIndex = String(Math.round(100 - Math.abs(d) * 2));
         }
         const face = card?.firstElementChild as HTMLElement | null;
         if (face) face.style.transform = `scale(${lerp(ringScale, 1, m)})`;
       }
 
-      if (labelRef.current) labelRef.current.style.opacity = String(1 - m);
-      if (titleRef.current) titleRef.current.style.opacity = String(m);
+      // fade label, title, index during takeover
+      const uiFactor = 1 - takeover;
+      if (labelRef.current) labelRef.current.style.opacity = String((1 - m) * uiFactor);
+      if (titleRef.current) titleRef.current.style.opacity = String(m * uiFactor);
+      if (indexRef.current) indexRef.current.style.opacity = String(uiFactor);
+
+      // animate takeover overlay
+      if (takeoverLayerRef.current) {
+        takeoverLayerRef.current.style.opacity = takeover > 0 ? "1" : "0";
+      }
+      if (takeoverCardRef.current) {
+        const coverScale = Math.max(
+          stage.w / (metrics.cardW || 1),
+          stage.h / (metrics.cardH || 1)
+        );
+        const s = lerp(1, coverScale, takeover);
+        takeoverCardRef.current.style.transform = `scale(${s})`;
+      }
+      if (takeoverTitleRef.current) {
+        const titleOpacity = clamp((takeover - 0.6) / 0.4, 0, 1);
+        takeoverTitleRef.current.style.opacity = String(titleOpacity);
+      }
+
       const near = clamp(Math.round(pos), 0, last);
       setActive((prev) => (prev === near ? prev : near));
     };
@@ -175,9 +209,9 @@ export function WorksWheel({
 
   const to = React.useCallback(
     (next: number) => {
-      target.current = clamp(next, 0, last + 1);
+      target.current = clamp(next, 0, END);
     },
-    [last],
+    [END],
   );
 
   const settling = React.useRef(0);
@@ -187,20 +221,26 @@ export function WorksWheel({
     if (!el) return;
     const onWheel = (event: WheelEvent) => {
       const next = target.current + event.deltaY / WHEEL_UNITS;
-      if (next > 0 && next < last + 1) event.preventDefault();
+      // prevent default while inside wheel range or takeover range
+      if (next > 0 && next < END) event.preventDefault();
+      // prevent scrolling past takeover end
+      if (target.current >= END && event.deltaY > 0) event.preventDefault();
       to(next);
-      window.clearTimeout(settling.current);
-      settling.current = window.setTimeout(
-        () => to(Math.round(target.current)),
-        SETTLE,
-      );
+      // settle only for normal wheel range (<= last+1)
+      if (next <= last + 1) {
+        window.clearTimeout(settling.current);
+        settling.current = window.setTimeout(
+          () => to(Math.round(target.current)),
+          SETTLE,
+        );
+      }
     };
     el.addEventListener("wheel", onWheel, { passive: false });
     return () => {
       el.removeEventListener("wheel", onWheel);
       window.clearTimeout(settling.current);
     };
-  }, [to, last]);
+  }, [to, last, END]);
 
   const drag = React.useRef<number | null>(null);
 
@@ -299,6 +339,44 @@ export function WorksWheel({
         </div>
       </div>
 
+      {/* Takeover overlay */}
+      <div
+        ref={takeoverLayerRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-50 flex items-center justify-center opacity-0"
+      >
+        <div
+          className="absolute inset-0 bg-background"
+          style={{ opacity: 0 }}
+          data-takeover-backdrop
+        />
+        <div
+          ref={takeoverCardRef}
+          className="relative overflow-hidden rounded-lg"
+          style={{
+            width: metrics.cardW,
+            height: metrics.cardH,
+            transformOrigin: "50% 50%",
+            transform: "scale(1)",
+          }}
+        >
+          <img
+            src={items[last]?.image}
+            alt=""
+            draggable={false}
+            className="h-full w-full object-cover"
+          />
+        </div>
+
+        <div
+          ref={takeoverTitleRef}
+          className="absolute left-[8%] top-1/2 -translate-y-1/2 tracking-tight opacity-0 text-foreground font-medium"
+          style={{ fontSize: metrics.title }}
+        >
+          {items[last]?.title ?? "Quem eu sou"}
+        </div>
+      </div>
+
       <div
         ref={labelRef}
         className="pointer-events-none absolute inset-0 grid place-items-center tracking-tight"
@@ -315,6 +393,7 @@ export function WorksWheel({
       </div>
 
       <ol
+        ref={indexRef}
         className="text-muted-foreground absolute top-[7.5%] right-[2.5%] text-right leading-[1.75]"
         style={{ fontSize: metrics.index }}
       >
