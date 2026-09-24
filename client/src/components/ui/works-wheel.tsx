@@ -193,6 +193,7 @@ export function WorksWheel({
         );
         const s = lerp(1, coverScale, takeover);
         takeoverCardRef.current.style.transform = `scale(${s})`;
+        takeoverCardRef.current.style.borderRadius = takeover > 0.9 ? "0px" : "12px";
       }
       if (takeoverTitleRef.current) {
         const titleOpacity = clamp((takeover - 0.6) / 0.4, 0, 1);
@@ -221,19 +222,21 @@ export function WorksWheel({
     if (!el) return;
     const onWheel = (event: WheelEvent) => {
       const next = target.current + event.deltaY / WHEEL_UNITS;
-      // prevent default while inside wheel range or takeover range
-      if (next > 0 && next < END) event.preventDefault();
-      // prevent scrolling past takeover end
-      if (target.current >= END && event.deltaY > 0) event.preventDefault();
-      to(next);
-      // settle only for normal wheel range (<= last+1)
-      if (next <= last + 1) {
+
+      // Se ainda não chegaste ao fim do takeover, prende o scroll
+      if (target.current < END || (target.current >= END && event.deltaY < 0)) {
+        event.preventDefault();
+        to(next);
         window.clearTimeout(settling.current);
-        settling.current = window.setTimeout(
-          () => to(Math.round(target.current)),
-          SETTLE,
-        );
+        // Só aplica settle se não estiver em takeover
+        if (next <= last + 1) {
+          settling.current = window.setTimeout(
+            () => to(Math.round(target.current)),
+            SETTLE,
+          );
+        }
       }
+      // Se está em takeover completo e scrolla para baixo, não faz nada (deixa a página scrollar)
     };
     el.addEventListener("wheel", onWheel, { passive: false });
     return () => {
@@ -248,7 +251,7 @@ export function WorksWheel({
     <section
       aria-label={label}
       className={cn(
-        "bg-background text-foreground relative h-full min-h-[24rem] w-full overflow-hidden select-none",
+        "bg-background text-foreground relative h-[100svh] min-h-[100svh] w-full overflow-hidden select-none",
         className,
       )}
       {...props}

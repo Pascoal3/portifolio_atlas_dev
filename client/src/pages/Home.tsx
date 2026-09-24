@@ -16,7 +16,7 @@ const WORKS: WorksWheelItem[] = [
 
 const navItems = [
   { label: "Inicio", href: "#home" },
-  { label: "Trabalhos", href: "#work" },
+  { label: "Trabalhos", href: "#works" },
   { label: "Sobre mim", href: "#about" },
   { label: "Contato", href: "#contact" },
 ];
@@ -115,7 +115,7 @@ export default function Home() {
             Eu crio experiências digitais que unem design, <br className="hidden sm:block" />
             motion e imaginação.
           </p>
-          <a className="work-cta" href="#work">
+          <a className="work-cta" href="#works">
             <span>Veja o meu trabalho</span>
             <span className="work-cta__icon"><ArrowUpRight /></span>
           </a>
@@ -137,11 +137,25 @@ export default function Home() {
         <span id="contact" className="anchor-target" />
       </main>
       <WorksWheel
-        id="works-wheel-section"
+        id="works"
         items={WORKS}
         label="Meus Trabalhos"
-        className="h-[100svh]"
+        className="h-[100svh] min-h-[100svh]"
       />
+      <section
+        id="quem-eu-sou"
+        aria-labelledby="quem-eu-sou-title"
+        className="min-h-[100svh] w-full bg-black text-white"
+      >
+        <div className="mx-auto max-w-5xl px-6 py-24">
+          <h2
+            id="quem-eu-sou-title"
+            className="text-4xl font-semibold tracking-tight md:text-6xl"
+          >
+            Quem eu sou
+          </h2>
+        </div>
+      </section>
     </>
   );
 }
