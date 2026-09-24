@@ -223,8 +223,11 @@ export function WorksWheel({
     const onWheel = (event: WheelEvent) => {
       const next = target.current + event.deltaY / WHEEL_UNITS;
 
-      // Se ainda não chegaste ao fim do takeover, prende o scroll
-      if (target.current < END || (target.current >= END && event.deltaY < 0)) {
+      const shouldPreventDefault =
+        (next > 0 && next < END) ||
+        (target.current >= END && event.deltaY < 0);
+
+      if (shouldPreventDefault) {
         event.preventDefault();
         to(next);
         window.clearTimeout(settling.current);
@@ -236,7 +239,6 @@ export function WorksWheel({
           );
         }
       }
-      // Se está em takeover completo e scrolla para baixo, não faz nada (deixa a página scrollar)
     };
     el.addEventListener("wheel", onWheel, { passive: false });
     return () => {
