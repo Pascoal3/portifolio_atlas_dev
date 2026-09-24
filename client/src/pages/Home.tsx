@@ -160,10 +160,10 @@ export default function Home() {
               Trabalho na interseção entre Inteligência Artificial, Desenvolvimento Web, UI/UX e Automação.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row">
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="rounded-full bg-white px-6 py-3 text-sm font-bold text-black transition hover:bg-gray-200">
+              <a href="https://github.com/Pascoal3" target="_blank" rel="noopener noreferrer" className="rounded-full bg-white px-6 py-3 text-sm font-bold text-black transition hover:bg-gray-200">
                 Ver projetos no GitHub
               </a>
-              <a href="#contact" className="rounded-full border border-white/30 px-6 py-3 text-sm font-bold text-white transition hover:bg-white/10">
+              <a href="https://wa.me/244933621858?text=Ol%C3%A1%2C%20vim%20do%20teu%20portf%C3%B3lio%2C%20estou%20interessado%20em%20tirar%20uma%20ideia%20do%20papel%21" target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/30 px-6 py-3 text-sm font-bold text-white transition hover:bg-white/10">
                 Bora tirar a tua ideia do papel?
               </a>
             </div>
@@ -204,7 +204,7 @@ export default function Home() {
           <hr className="my-[2vw] border-none border-t border-white/20" />
           <div>
             <h2 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
-              Design +<br />Dev
+              Design +<br />dev
             </h2>
           </div>
           <hr className="my-[2vw] border-none border-t border-white/20" />
@@ -235,7 +235,7 @@ export default function Home() {
           <hr className="my-[2vw] border-none border-t border-black/20" />
           <div>
             <h2 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
-              A minha<br />história
+              A minha<br /> <span id="titulo_historia">história</span>
             </h2>
           </div>
           <hr className="my-[2vw] border-none border-t border-black/20" />

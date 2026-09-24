@@ -553,6 +553,11 @@
   }
 }
 
+#titulo_historia {
+  margin-top: 20px;
+  display: inline-block;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
