@@ -18,7 +18,7 @@ const WORKS: WorksWheelItem[] = [
 const navItems = [
   { label: "Inicio", href: "#home" },
   { label: "Trabalhos", href: "#works" },
-  { label: "Sobre mim", href: "#about" },
+  { label: "Quem sou eu", href: "#quem-sou" },
   { label: "Contato", href: "#contact" },
 ];
 
@@ -145,7 +145,7 @@ export default function Home() {
       />
       <FlowArt aria-label="Sobre mim">
         {/* Secção 1: Headline forte / Quem sou */}
-        <FlowSection aria-label="Quem sou" style={{ backgroundColor: '#000000', color: '#ffffff' }}>
+        <FlowSection id="quem-sou" aria-label="Quem sou" style={{ backgroundColor: '#000000', color: '#ffffff' }}>
           <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-70">01 — Quem sou</p>
           <hr className="my-[2vw] border-none border-t border-white/20" />
           <div>
