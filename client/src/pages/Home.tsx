@@ -220,10 +220,14 @@ export default function Home() {
               </p>
             </div>
             <div className="relative overflow-hidden rounded-xl border border-white/10">
-              <img
-                src="/minha_foto.jpeg"
+              <video
+                src="/apresentacao_skila.webm"
                 alt="Atlas nos bastidores do trabalho"
-                className="h-[300px] w-full object-cover md:h-[400px]"
+                className="h-[60vh] w-full object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
               />
             </div>
           </div>
