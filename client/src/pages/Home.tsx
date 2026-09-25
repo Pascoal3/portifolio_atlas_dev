@@ -150,7 +150,7 @@ export default function Home() {
           <hr className="my-[2vw] border-none border-t border-white/20" />
           <div>
             <h1 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
-              Transformo<br />ideias em<br />software. 🚀
+              Transformo<br />ideias em<br />software. <i className="bi bi-rocket-takeoff-fill rocket-icon" />
             </h1>
           </div>
           <hr className="my-[2vw] border-none border-t border-white/20" />
@@ -176,7 +176,7 @@ export default function Home() {
           <hr className="my-[2vw] border-none border-t border-black/20" />
           <div>
             <h2 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
-              Por quê<br />eu?
+              Por quê<br />eu? <i className="bi bi-search section-icon section-icon--light" />
             </h2>
           </div>
           <hr className="my-[2vw] border-none border-t border-black/20" />
@@ -204,7 +204,7 @@ export default function Home() {
           <hr className="my-[2vw] border-none border-t border-white/20" />
           <div>
             <h2 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
-              Design +<br />dev
+              Design +<br />dev <i className="bi bi-palette2 section-icon section-icon--dark" />
             </h2>
           </div>
           <hr className="my-[2vw] border-none border-t border-white/20" />
@@ -235,7 +235,7 @@ export default function Home() {
           <hr className="my-[2vw] border-none border-t border-black/20" />
           <div>
             <h2 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
-              A minha<br /> <span id="titulo_historia">história</span>
+              A minha<br /> <span id="titulo_historia">história</span> <i className="bi bi-journal-text section-icon section-icon--light" />
             </h2>
           </div>
           <hr className="my-[2vw] border-none border-t border-black/20" />

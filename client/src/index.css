@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
 
 @custom-variant dark (&:is(.dark *));
 
@@ -556,6 +557,48 @@
 #titulo_historia {
   margin-top: 20px;
   display: inline-block;
+}
+
+/* Estilização do ícone do foguete na secção Story Scroll */
+.rocket-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.15em;
+  font-size: 0.65em;
+  color: #ffffff;
+  transform: rotate(-15deg);
+  transition: transform 0.3s ease;
+}
+
+.rocket-icon:hover {
+  transform: rotate(0deg) translateY(-0.1em);
+}
+
+/* Ícones das secções do Story Scroll - adaptam-se ao fundo */
+.section-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.15em;
+  font-size: 0.65em;
+  transition: transform 0.3s ease;
+}
+
+/* Fundo claro (branco) -> ícone preto */
+.section-icon--light {
+  color: #000000;
+  transform: rotate(-10deg);
+}
+.section-icon--light:hover {
+  transform: rotate(0deg) translateY(-0.1em);
+}
+
+/* Fundo escuro (preto) -> ícone branco */
+.section-icon--dark {
+  color: #ffffff;
+  transform: rotate(10deg);
+}
+.section-icon--dark:hover {
+  transform: rotate(0deg) translateY(-0.1em);
 }
 
 @media (prefers-reduced-motion: reduce) {
