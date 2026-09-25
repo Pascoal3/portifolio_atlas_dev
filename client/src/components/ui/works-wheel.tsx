@@ -291,14 +291,12 @@ export function WorksWheel({
           className="absolute top-1/2 left-1/2 [transform-style:preserve-3d]"
         >
           {items.map((item, i) => {
-            const Tag = (item.href ? "a" : "div") as "a" | "div";
             return (
               <React.Fragment key={item.title}>
-                <Tag
+                <div
                   id={`works-wheel-${i}`}
                   role="option"
                   aria-selected={i === active}
-                  href={item.href}
                   ref={(node: HTMLElement | null) => {
                     cardRefs.current[i] = node;
                   }}
@@ -317,27 +315,29 @@ export function WorksWheel({
                       draggable={false}
                       className="size-full object-cover"
                     />
-                    {action && item.href ? (
-                      <span className="bg-background/80 text-foreground pointer-events-none absolute right-3 bottom-3 flex translate-y-1 items-center gap-1 rounded-full px-2.5 py-1 text-[0.7rem] opacity-0 backdrop-blur-sm transition group-hover:translate-y-0 group-hover:opacity-100">
+                    {item.href && i !== count - 1 ? (
+                      <a
+                        href={item.href}
+                        className="pointer-events-auto absolute right-3 bottom-3 flex translate-y-1 items-center gap-1.5 px-3 py-1.5 rounded-full bg-background/80 backdrop-blur-sm text-foreground opacity-0 transition group-hover:translate-y-0 group-hover:opacity-100 group-hover:scale-105 hover:bg-primary/90 hover:text-primary-foreground"
+                        aria-label={`Ver projeto: ${item.title}`}
+                      >
+                        <span className="text-xs font-medium whitespace-nowrap">Ver projeto</span>
                         <svg
-                          viewBox="0 0 12 12"
-                          className="size-2.5"
+                          viewBox="0 0 24 24"
+                          className="size-4"
                           aria-hidden="true"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         >
-                          <path
-                            d="M3 9 9 3M4 3h5v5"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1.4"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
+                          <path d="M5 19 19 5M8 5h11v11" />
                         </svg>
-                        {action}
-                      </span>
+                      </a>
                     ) : null}
                   </span>
-                </Tag>
+                </div>
               </React.Fragment>
             );
           })}

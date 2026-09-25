@@ -4,15 +4,15 @@ import { WorksWheel, type WorksWheelItem } from "@/components/ui/works-wheel";
 import FlowArt, { FlowSection } from "@/components/ui/story-scroll";
 
 const WORKS: WorksWheelItem[] = [
-  { title: "Projeto 01", image: "/works/img_componente_1.jpg" },
-  { title: "Projeto 02", image: "/works/img_componente_2.jpg" },
-  { title: "Projeto 03", image: "/works/img_componente_3.jpg" },
-  { title: "Projeto 04", image: "/works/img_componente_4.jpg" },
-  { title: "Projeto 05", image: "/works/img_componente_5.jpg" },
-  { title: "Projeto 06", image: "/works/img_componente_6.jpg" },
-  { title: "Projeto 07", image: "/works/img_componente_7.jpg" },
-  { title: "Projeto 08", image: "/works/img_componente_8.jpg" },
-  { title: "Quem eu sou", image: "/works/img_componente_9.jpg" },
+  { title: "Projeto 01", image: "/works/img_componente_1.jpg", href: "#" },
+  { title: "Projeto 02", image: "/works/img_componente_2.jpg", href: "#" },
+  { title: "Projeto 03", image: "/works/img_componente_3.jpg", href: "#" },
+  { title: "Projeto 04", image: "/works/img_componente_4.jpg", href: "#" },
+  { title: "Projeto 05", image: "/works/img_componente_5.jpg", href: "#" },
+  { title: "Projeto 06", image: "/works/img_componente_6.jpg", href: "#" },
+  { title: "Projeto 07", image: "/works/img_componente_7.jpg", href: "#" },
+  { title: "Projeto 08", image: "/works/img_componente_8.jpg", href: "#" },
+  { title: "Quem eu sou", image: "/works/img_componente_9.jpg", href: "#" },
 ];
 
 const navItems = [
@@ -222,7 +222,6 @@ export default function Home() {
             <div className="relative overflow-hidden rounded-xl border border-white/10">
               <video
                 src="/apresentacao_skila.webm"
-                alt="Atlas nos bastidores do trabalho"
                 className="h-[60vh] w-full object-cover"
                 autoPlay
                 loop
