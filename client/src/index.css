@@ -25,6 +25,10 @@
   --ring: #c8b6ff;
 }
 
+*{
+  user-select: none;
+}
+
 .dark {
   --background: #090817;
   --foreground: #f5f1ff;

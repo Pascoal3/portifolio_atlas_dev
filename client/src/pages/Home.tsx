@@ -4,7 +4,7 @@ import { WorksWheel, type WorksWheelItem } from "@/components/ui/works-wheel";
 import FlowArt, { FlowSection } from "@/components/ui/story-scroll";
 
 const WORKS: WorksWheelItem[] = [
-  { title: "Projeto 01", image: "/works/img_componente_1.jpg", href: "#" },
+  { title: "Skilla - Plataforma Freelance", image: "/works/image.png", href: "#" },
   { title: "Projeto 02", image: "/works/img_componente_2.jpg", href: "#" },
   { title: "Projeto 03", image: "/works/img_componente_3.jpg", href: "#" },
   { title: "Projeto 04", image: "/works/img_componente_4.jpg", href: "#" },
@@ -106,14 +106,14 @@ export default function Home() {
         </header>
 
         <section className="hero-content" aria-labelledby="hero-title">
-          <p className="hero-eyebrow">Portifólio Web dev</p>
+          <p className="hero-eyebrow">Portifólio Atlas Dev - Web dev</p>
           <h1 id="hero-title" className="hero-title">
             Sites não deviam
             <br />
-            ser <em>aborrecidos</em>
+            ser <em>aborrecidos.</em>
           </h1>
           <p className="hero-description">
-            Eu crio experiências digitais que unem design, <br className="hidden sm:block" />
+            Eu crio experiências web que unem design, <br className="hidden sm:block" />
             motion e imaginação.
           </p>
           <a className="work-cta" href="#works">
@@ -146,7 +146,7 @@ export default function Home() {
       <FlowArt aria-label="Sobre mim">
         {/* Secção 1: Headline forte / Quem sou */}
         <FlowSection id="quem-sou" aria-label="Quem sou" style={{ backgroundColor: '#000000', color: '#ffffff' }}>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-70">01 — Quem sou</p>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-70">01 - Quem sou</p>
           <hr className="my-[2vw] border-none border-t border-white/20" />
           <div>
             <h1 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
@@ -172,7 +172,7 @@ export default function Home() {
 
         {/* Secção 2: Por quê eu? */}
         <FlowSection aria-label="Diferencial" style={{ backgroundColor: '#ffffff', color: '#000000' }}>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-70">02 — Diferencial</p>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-70">02 - Diferencial</p>
           <hr className="my-[2vw] border-none border-t border-black/20" />
           <div>
             <h2 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
@@ -200,7 +200,7 @@ export default function Home() {
 
         {/* Secção 3: Design + Desenvolvimento (Com foto pessoal) */}
         <FlowSection aria-label="Processo" style={{ backgroundColor: '#111111', color: '#ffffff' }}>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-70">03 — Processo</p>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-70">03 - Processo</p>
           <hr className="my-[2vw] border-none border-t border-white/20" />
           <div>
             <h2 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
@@ -234,7 +234,7 @@ export default function Home() {
 
         {/* Secção 4: Pequena história */}
         <FlowSection aria-label="História" style={{ backgroundColor: '#ffffff', color: '#000000' }}>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-70">04 — Jornada</p>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-70">04 - Jornada</p>
           <hr className="my-[2vw] border-none border-t border-black/20" />
           <div>
             <h2 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
