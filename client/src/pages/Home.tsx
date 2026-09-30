@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, Fragment } from "react";
 import type { CSSProperties, MouseEvent } from "react";
 import { WorksWheel, type WorksWheelItem } from "@/components/ui/works-wheel";
 import FlowArt, { FlowSection } from "@/components/ui/story-scroll";
+import { InteractiveHoverLinks, type InteractiveLinkItem } from "@/components/ui/interactive-hover-links";
 
 const WORKS: WorksWheelItem[] = [
   { title: "Skilla - Plataforma Freelance", image: "/works/image.png", href: "#" },
@@ -22,7 +23,40 @@ const navItems = [
   { label: "Contato", href: "#contact" },
 ];
 
-const disciplines = ["Websites", "Apps", "Branding", "UI/UX"];
+const disciplines = ["Websites", "Landing Pages","Apps", "Branding", "UI/UX"];
+
+const SERVICES_DATA: InteractiveLinkItem[] = [
+  {
+    heading: "Websites",
+    subheading: "Plataformas web completas, escaláveis e com performance extrema.",
+    imgSrc: "/services/servico_websites.png",
+    href: "#contact",
+  },
+  {
+    heading: "Landing Pages",
+    subheading: "Páginas de alta conversão desenhadas para impressionar e vender.",
+    imgSrc: "/services/servico_landing_pages.jpg",
+    href: "#contact",
+  },
+  {
+    heading: "UI/UX Design",
+    subheading: "Interfaces modernas, intuitivas e com obsessão por cada detalhe.",
+    imgSrc: "/services/servico_ui_ux.jpg",
+    href: "#contact",
+  },
+  {
+    heading: "Branding",
+    subheading: "Identidades visuais fortes que destacam a tua marca no mercado.",
+    imgSrc: "/services/servico_branding.jpg",
+    href: "#contact",
+  },
+  {
+    heading: "Automação & IA",
+    subheading: "Agentes inteligentes e fluxos automatizados que poupam horas de trabalho.",
+    imgSrc: "/services/servico_automacao.jpg",
+    href: "#contact",
+  },
+];
 
 function ArrowUpRight() {
   return (
@@ -248,6 +282,33 @@ export default function Home() {
             para resolver problemas reais, em Angola e além. Hoje, cada projeto público que construo é um pedaço 
             dessa jornada, partilhado abertamente para quem quiser aprender ou colaborar.
           </p>
+        </FlowSection>
+
+        {/* SEÇÃO 5: Serviços */}
+        <FlowSection
+          aria-label="Os Meus Serviços"
+          style={{ backgroundColor: '#07070b', color: '#ffffff' }}
+        >
+          <div className="flex items-center justify-between border-b border-white/20 pb-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-red-500">
+              05 — Soluções & Serviços
+            </p>
+            <span className="text-xs text-white/50">O que posso construir para ti</span>
+          </div>
+
+          <div className="my-auto py-6">
+            <InteractiveHoverLinks links={SERVICES_DATA} />
+          </div>
+
+          <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-white/40">
+            <span>Tens um desafio em mente?</span>
+            <a
+              href="#contact"
+              className="text-red-400 hover:text-red-300 font-semibold uppercase tracking-wider transition-colors"
+            >
+              Bora trabalhar juntos →
+            </a>
+          </div>
         </FlowSection>
       </FlowArt>
     </>
