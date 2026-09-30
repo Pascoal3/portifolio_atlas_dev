@@ -1,12 +1,12 @@
 import { useMotionValue, motion, useSpring, useTransform } from "framer-motion";
 import React, { useRef } from "react";
-import { ArrowRight } from "lucide-react";
 
 export interface InteractiveLinkItem {
   heading: string;
   subheading: string;
   imgSrc: string;
   href: string;
+  icon: React.ReactNode;
 }
 
 interface InteractiveHoverLinksProps {
@@ -29,7 +29,7 @@ export function InteractiveHoverLinks({
   );
 }
 
-function LinkItem({ heading, imgSrc, subheading, href }: InteractiveLinkItem) {
+function LinkItem({ heading, imgSrc, subheading, href, icon }: InteractiveLinkItem) {
   const ref = useRef<HTMLAnchorElement | null>(null);
 
   const x = useMotionValue(0);
@@ -71,7 +71,7 @@ function LinkItem({ heading, imgSrc, subheading, href }: InteractiveLinkItem) {
       }}
       initial="initial"
       whileHover="whileHover"
-      className="group relative flex items-center justify-between border-b border-white/15 py-4 transition-colors duration-300 hover:border-red-500/60 md:py-6"
+      className="group relative flex items-center justify-between border-b border-white/15 py-4 transition-colors duration-300 hover:border-white/60 md:py-6"
     >
       <div>
         <motion.span
@@ -117,9 +117,9 @@ function LinkItem({ heading, imgSrc, subheading, href }: InteractiveLinkItem) {
             whileHover: { x: "0%", opacity: 1 },
           }}
           transition={{ type: "spring", stiffness: 250, damping: 20 }}
-          className="relative z-10 p-2 text-red-500"
+          className="relative z-10 p-2 text-white"
         >
-          <ArrowRight className="size-6 md:size-8" />
+          {icon}
         </motion.div>
       </div>
     </motion.a>

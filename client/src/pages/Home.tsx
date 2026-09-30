@@ -3,6 +3,7 @@ import type { CSSProperties, MouseEvent } from "react";
 import { WorksWheel, type WorksWheelItem } from "@/components/ui/works-wheel";
 import FlowArt, { FlowSection } from "@/components/ui/story-scroll";
 import { InteractiveHoverLinks, type InteractiveLinkItem } from "@/components/ui/interactive-hover-links";
+import { Globe, Layout, Palette, Brush, Zap, Monitor } from "lucide-react";
 
 const WORKS: WorksWheelItem[] = [
   { title: "Skilla - Plataforma Freelance", image: "/works/image.png", href: "#" },
@@ -31,30 +32,42 @@ const SERVICES_DATA: InteractiveLinkItem[] = [
     subheading: "Plataformas web completas, escaláveis e com performance extrema.",
     imgSrc: "/services/servico_websites.png",
     href: "#contact",
+    icon: <Globe className="size-6 md:size-8" />,
+  },
+  {
+    heading: "Aplicações web",
+    subheading: "Apps web progressivas, dashboards e sistemas complexos prontos para escalar.",
+    imgSrc: "/services/servico_webapps.jpg",
+    href: "#contact",
+    icon: <Monitor className="size-6 md:size-8" />,
   },
   {
     heading: "Landing Pages",
     subheading: "Páginas de alta conversão desenhadas para impressionar e vender.",
     imgSrc: "/services/servico_landing_pages.jpg",
     href: "#contact",
+    icon: <Layout className="size-6 md:size-8" />,
   },
   {
     heading: "UI/UX Design",
     subheading: "Interfaces modernas, intuitivas e com obsessão por cada detalhe.",
     imgSrc: "/services/servico_ui_ux.jpg",
     href: "#contact",
+    icon: <Palette className="size-6 md:size-8" />,
   },
   {
     heading: "Branding",
     subheading: "Identidades visuais fortes que destacam a tua marca no mercado.",
     imgSrc: "/services/servico_branding.jpg",
     href: "#contact",
+    icon: <Brush className="size-6 md:size-8" />,
   },
   {
     heading: "Automação & IA",
     subheading: "Agentes inteligentes e fluxos automatizados que poupam horas de trabalho.",
     imgSrc: "/services/servico_automacao.jpg",
     href: "#contact",
+    icon: <Zap className="size-6 md:size-8" />,
   },
 ];
 
@@ -290,7 +303,7 @@ export default function Home() {
           style={{ backgroundColor: '#07070b', color: '#ffffff' }}
         >
           <div className="flex items-center justify-between border-b border-white/20 pb-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-red-500">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-white">
               05 — Soluções & Serviços
             </p>
             <span className="text-xs text-white/50">O que posso construir para ti</span>
@@ -304,7 +317,7 @@ export default function Home() {
             <span>Tens um desafio em mente?</span>
             <a
               href="#contact"
-              className="text-red-400 hover:text-red-300 font-semibold uppercase tracking-wider transition-colors"
+              className="text-white/70 hover:text-white font-semibold uppercase tracking-wider transition-colors"
             >
               Bora trabalhar juntos →
             </a>
