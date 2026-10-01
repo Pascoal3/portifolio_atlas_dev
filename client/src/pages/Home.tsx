@@ -21,10 +21,11 @@ const navItems = [
   { label: "Inicio", href: "#home" },
   { label: "Trabalhos", href: "#works" },
   { label: "Quem sou eu", href: "#quem-sou" },
+  { label: "Serviços", href: "#services" },
   { label: "Contato", href: "#contact" },
 ];
 
-const disciplines = ["Websites", "Landing Pages","Apps", "Branding", "UI/UX"];
+const disciplines = ["Websites", "Portifólios" ,"Landing Pages", "Branding","Web Apps", "UI/UX"];
 
 const SERVICES_DATA: InteractiveLinkItem[] = [
   {
@@ -37,7 +38,7 @@ const SERVICES_DATA: InteractiveLinkItem[] = [
   {
     heading: "Aplicações web",
     subheading: "Apps web progressivas, dashboards e sistemas complexos prontos para escalar.",
-    imgSrc: "/services/servico_webapps.jpg",
+    imgSrc: "/services/servico_apps_web.jpg",
     href: "#contact",
     icon: <Monitor className="size-6 md:size-8" />,
   },
@@ -247,7 +248,7 @@ export default function Home() {
 
         {/* Secção 3: Design + Desenvolvimento (Com foto pessoal) */}
         <FlowSection aria-label="Processo" style={{ backgroundColor: '#111111', color: '#ffffff' }}>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-70">03 - Processo</p>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-70">03 - Bastidores</p>
           <hr className="my-[2vw] border-none border-t border-white/20" />
           <div>
             <h2 className="text-[clamp(3.5rem,12vw,14rem)] font-bold leading-[0.85] uppercase tracking-tight">
@@ -298,7 +299,8 @@ export default function Home() {
         </FlowSection>
 
         {/* SEÇÃO 5: Serviços */}
-        <FlowSection
+        <FlowSection 
+          id="services"
           aria-label="Os Meus Serviços"
           style={{ backgroundColor: '#07070b', color: '#ffffff' }}
         >
