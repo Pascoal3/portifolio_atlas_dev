@@ -3,6 +3,7 @@ import type { CSSProperties, MouseEvent } from "react";
 import { WorksWheel, type WorksWheelItem } from "@/components/ui/works-wheel";
 import FlowArt, { FlowSection } from "@/components/ui/story-scroll";
 import { InteractiveHoverLinks, type InteractiveLinkItem } from "@/components/ui/interactive-hover-links";
+import { ProcessBento } from "@/components/ui/process-bento";
 import { Globe, Layout, Palette, Brush, Zap, Monitor } from "lucide-react";
 
 const WORKS: WorksWheelItem[] = [
@@ -18,7 +19,7 @@ const WORKS: WorksWheelItem[] = [
 ];
 
 const navItems = [
-  { label: "Inicio", href: "#home" },
+  { label: "Processo", href: "#processo" },
   { label: "Trabalhos", href: "#works" },
   { label: "Quem sou eu", href: "#quem-sou" },
   { label: "Serviços", href: "#services" },
@@ -247,7 +248,7 @@ export default function Home() {
         </FlowSection>
 
         {/* Secção 3: Design + Desenvolvimento (Com foto pessoal) */}
-        <FlowSection aria-label="Processo" style={{ backgroundColor: '#111111', color: '#ffffff' }}>
+        <FlowSection id="processo" aria-label="Processo" style={{ backgroundColor: '#111111', color: '#ffffff' }}>
           <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-70">03 - Bastidores</p>
           <hr className="my-[2vw] border-none border-t border-white/20" />
           <div>
@@ -324,6 +325,15 @@ export default function Home() {
               Bora trabalhar juntos →
             </a>
           </div>
+        </FlowSection>
+
+        {/* SEÇÃO 6: Processo */}
+        <FlowSection
+          id="processo"
+          aria-label="Processo de Desenvolvimento"
+          style={{ backgroundColor: '#000000', color: '#ffffff' }}
+        >
+          <ProcessBento />
         </FlowSection>
       </FlowArt>
     </>
