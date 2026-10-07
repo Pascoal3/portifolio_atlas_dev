@@ -126,16 +126,9 @@ const CASE_STUDIES: CaseStudy[] = [
   },
 ];
 
-function padNumber(n: number): string {
-  return n < 10 ? `0${n}` : String(n);
-}
-
 export function CaseStudiesSection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [openModalId, setOpenModalId] = useState<string | null>(null);
   const [lastFocused, setLastFocused] = useState<HTMLElement | null>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLCollectionOf<HTMLElement> | null>(null);
   const reducedMotion = useRef(false);
 
   useEffect(() => {
@@ -147,69 +140,6 @@ export function CaseStudiesSection() {
     mq.addEventListener("change", update);
     return () => mq.removeEventListener("change", update);
   }, []);
-
-  const getStep = useCallback(() => {
-    const track = trackRef.current;
-    if (!track || !cardsRef.current || cardsRef.current.length === 0) return 0;
-    const firstCard = cardsRef.current[0];
-    const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-    return firstCard.getBoundingClientRect().width + gap;
-  }, []);
-
-  const getVisibleCount = useCallback(() => {
-    const track = trackRef.current;
-    if (!track) return 1;
-    const step = getStep();
-    return step ? Math.max(1, Math.round(track.clientWidth / step)) : 1;
-  }, [getStep]);
-
-  const updateNavigation = useCallback(() => {
-    const track = trackRef.current;
-    if (!track || !cardsRef.current || cardsRef.current.length === 0) return;
-
-    const step = getStep();
-    const idx = step ? Math.round(track.scrollLeft / step) : 0;
-    const visibleCount = getVisibleCount();
-    const maxIdx = Math.max(0, cardsRef.current.length - visibleCount);
-
-    const prevBtn = track.parentElement?.querySelector<HTMLButtonElement>("[data-cs-prev]");
-    const nextBtn = track.parentElement?.querySelector<HTMLButtonElement>("[data-cs-next]");
-    const curEl = track.parentElement?.querySelector<HTMLSpanElement>("[data-cs-current]");
-    const totEl = track.parentElement?.querySelector<HTMLSpanElement>("[data-cs-total]");
-
-    if (prevBtn) prevBtn.disabled = track.scrollLeft <= 2;
-    if (nextBtn) nextBtn.disabled = idx >= maxIdx || track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
-    if (curEl) curEl.textContent = padNumber(Math.min(idx + 1, cardsRef.current.length));
-    if (totEl) totEl.textContent = padNumber(cardsRef.current.length);
-  }, [getStep, getVisibleCount]);
-
-  const go = useCallback((dir: number) => {
-    const track = trackRef.current;
-    if (!track) return;
-    const step = getStep();
-    if (reducedMotion.current) {
-      track.scrollLeft += dir * step;
-      updateNavigation();
-    } else {
-      track.scrollBy({ left: dir * step, behavior: "smooth" });
-    }
-  }, [getStep, updateNavigation]);
-
-  const handleScroll = useCallback(() => {
-    window.requestAnimationFrame(updateNavigation);
-  }, [updateNavigation]);
-
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (e.target !== trackRef.current) return;
-    if (e.key === "ArrowRight") {
-      e.preventDefault();
-      go(1);
-    }
-    if (e.key === "ArrowLeft") {
-      e.preventDefault();
-      go(-1);
-    }
-  }, [go]);
 
   const openModal = useCallback((id: string) => {
     setLastFocused(document.activeElement as HTMLElement);
@@ -244,14 +174,6 @@ export function CaseStudiesSection() {
     return () => document.removeEventListener("keydown", handleEscape);
   }, [closeAllModals]);
 
-  useEffect(() => {
-    updateNavigation();
-    window.addEventListener("resize", updateNavigation);
-    return () => window.removeEventListener("resize", updateNavigation);
-  }, [updateNavigation]);
-
-  const currentCase = CASE_STUDIES[currentIndex];
-
   return (
     <section id="case-studies-section" aria-labelledby="cs-heading">
       <style>{`
@@ -279,12 +201,7 @@ export function CaseStudiesSection() {
         }
         #case-studies-section .cs-head {
           max-width: 1200px;
-          margin: 0 auto 24px;
-          display: flex;
-          align-items: flex-end;
-          justify-content: space-between;
-          gap: 16px;
-          flex-wrap: wrap;
+          margin: 0 auto 32px;
         }
         #case-studies-section .cs-eyebrow {
           margin: 0 0 6px;
@@ -298,73 +215,14 @@ export function CaseStudiesSection() {
           font-size: 1rem;
           max-width: 60ch;
         }
-        #case-studies-section .cs-nav {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-        }
-        #case-studies-section .cs-count {
-          font-weight: 700;
-          font-size: .85rem;
-          letter-spacing: .1em;
-          margin-right: 6px;
-        }
-        #case-studies-section .cs-count b {
-          font-weight: 900;
-        }
-        #case-studies-section .cs-arrow {
-          width: 48px;
-          height: 48px;
-          border-radius: 50%;
-          cursor: pointer;
-          border: 2px solid var(--cs-ink);
-          background: var(--cs-ink);
-          color: var(--cs-lime);
-          font-size: 1.2rem;
-          font-weight: 800;
-          line-height: 1;
-          transition: background .2s, color .2s, transform .2s, opacity .2s;
-        }
-        #case-studies-section .cs-arrow:hover:not(:disabled) {
-          background: var(--cs-lime);
-          color: var(--cs-ink);
-          transform: translateY(-2px);
-        }
-        #case-studies-section .cs-arrow:disabled {
-          opacity: .3;
-          cursor: not-allowed;
-        }
-        #case-studies-section .cs-arrow:focus-visible,
-        #case-studies-section .cs-round:focus-visible,
-        #case-studies-section .cs-cta:focus-visible,
-        #case-studies-section .cs-close:focus-visible,
-        #case-studies-section .cs-block:focus-visible,
-        #case-studies-section .cs-track:focus-visible {
-          outline: 3px solid var(--cs-blue);
-          outline-offset: 3px;
-        }
-        #case-studies-section .cs-viewport {
+        #case-studies-section .cs-grid {
           max-width: 1200px;
           margin: 0 auto;
-        }
-        #case-studies-section .cs-track {
-          display: flex;
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
           gap: var(--cs-gap);
-          align-items: stretch;
-          overflow-x: auto;
-          scroll-snap-type: x mandatory;
-          scroll-behavior: smooth;
-          scrollbar-width: none;
-          -ms-overflow-style: none;
-          padding: 4px;
-          margin: -4px;
-        }
-        #case-studies-section .cs-track::-webkit-scrollbar {
-          display: none;
         }
         #case-studies-section .cs-card {
-          flex: 0 0 calc((100% - var(--cs-gap)) / 2);
-          scroll-snap-align: start;
           padding: 14px;
           background: #fff;
           border: 2px solid var(--cs-ink);
@@ -481,7 +339,7 @@ export function CaseStudiesSection() {
         #case-studies-section .cs-meta dd {
           margin: 0;
         }
-        #case-studies-section .cs-grid {
+        #case-studies-section .cs-block-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 10px;
@@ -736,12 +594,12 @@ export function CaseStudiesSection() {
           margin: 0;
         }
         @media (max-width: 900px) {
-          #case-studies-section .cs-card {
-            flex-basis: 100%;
+          #case-studies-section .cs-grid {
+            grid-template-columns: 1fr;
           }
         }
         @media (max-width: 560px) {
-          #case-studies-section .cs-grid {
+          #case-studies-section .cs-block-grid {
             grid-template-columns: 1fr;
           }
           #case-studies-section .cs-block--solution ul {
@@ -778,184 +636,136 @@ export function CaseStudiesSection() {
           #case-studies-section * {
             transition: none !important;
           }
-          #case-studies-section .cs-track {
-            scroll-behavior: auto;
-          }
         }
       `}</style>
 
       <header className="cs-head">
-        <div className="cs-head-text">
-          <p className="cs-eyebrow" id="cs-heading">CASE STUDIES / RESULTADOS</p>
-          <p className="cs-sub">Projetos reais, contados pelo problema, pelo processo e pelo impacto.</p>
-        </div>
-        <div className="cs-nav" aria-label="Navegação do carrossel">
-          <span className="cs-count" aria-live="polite">
-            <b data-cs-current>{padNumber(currentIndex + 1)}</b> / <span data-cs-total>{padNumber(CASE_STUDIES.length)}</span>
-          </span>
-          <button
-            type="button"
-            className="cs-arrow"
-            data-cs-prev
-            aria-label="Case anterior"
-            onClick={() => go(-1)}
-          >
-            ←
-          </button>
-          <button
-            type="button"
-            className="cs-arrow"
-            data-cs-next
-            aria-label="Próximo case"
-            onClick={() => go(1)}
-          >
-            →
-          </button>
-        </div>
+        <p className="cs-eyebrow" id="cs-heading">CASE STUDIES / RESULTADOS</p>
+        <p className="cs-sub">Projetos reais, contados pelo problema, pelo processo e pelo impacto.</p>
       </header>
 
-      <div className="cs-viewport">
-        <div
-          className="cs-track"
-          ref={trackRef}
-          tabIndex={0}
-          aria-label="Lista de case studies"
-          onScroll={handleScroll}
-          onKeyDown={handleKeyDown}
-        >
-          {CASE_STUDIES.map((cs, index) => (
-            <article
-              key={cs.id}
-              className="cs-card"
-              data-cs-card
-              ref={(el) => {
-                if (el) {
-                  if (!cardsRef.current) {
-                    cardsRef.current = document.getElementsByClassName("cs-card") as HTMLCollectionOf<HTMLElement>;
-                  }
-                }
-              }}
-            >
-              <div className="cs-topbar">
-                <span className="cs-pill cs-pill--lime">CASE STUDY {cs.number}</span>
-                <span className="cs-topbar-label">{cs.subtitle}</span>
-                <button
-                  className="cs-round"
-                  type="button"
-                  aria-label={`Ver detalhes do case ${cs.number}`}
-                  onClick={() => openModal(cs.id)}
-                >
-                  ↗
-                </button>
-              </div>
+      <div className="cs-grid">
+        {CASE_STUDIES.map((cs) => (
+          <article key={cs.id} className="cs-card">
+            <div className="cs-topbar">
+              <span className="cs-pill cs-pill--lime">CASE STUDY {cs.number}</span>
+              <span className="cs-topbar-label">{cs.subtitle}</span>
+              <button
+                className="cs-round"
+                type="button"
+                aria-label={`Ver detalhes do case ${cs.number}`}
+                onClick={() => openModal(cs.id)}
+              >
+                ↗
+              </button>
+            </div>
 
-              <figure className="cs-shot">
-                <img src={cs.image} alt={cs.imageAlt} loading="lazy" />
-              </figure>
+            <figure className="cs-shot">
+              <img src={cs.image} alt={cs.imageAlt} loading="lazy" />
+            </figure>
 
-              <div className="cs-intro">
-                <h3 className="cs-title">{cs.title}</h3>
-                <p className="cs-desc">{cs.description}</p>
-                <dl className="cs-meta">
-                  <div>
-                    <dt>PAPEL</dt>
-                    <dd>{cs.role}</dd>
-                  </div>
-                  <div>
-                    <dt>STACK</dt>
-                    <dd>{cs.stack}</dd>
-                  </div>
-                </dl>
-              </div>
+            <div className="cs-intro">
+              <h3 className="cs-title">{cs.title}</h3>
+              <p className="cs-desc">{cs.description}</p>
+              <dl className="cs-meta">
+                <div>
+                  <dt>PAPEL</dt>
+                  <dd>{cs.role}</dd>
+                </div>
+                <div>
+                  <dt>STACK</dt>
+                  <dd>{cs.stack}</dd>
+                </div>
+              </dl>
+            </div>
 
-              <div className="cs-grid">
-                <section
-                  className="cs-block cs-block--problem"
-                  tabIndex={0}
-                  aria-labelledby={`cs-h-problem-${cs.number}`}
-                >
-                  <h4 id={`cs-h-problem-${cs.number}`} className="cs-block-title">
-                    PROBLEMA
-                  </h4>
-                  <ul>
-                    {cs.problem.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
-                </section>
+            <div className="cs-block-grid">
+              <section
+                className="cs-block cs-block--problem"
+                tabIndex={0}
+                aria-labelledby={`cs-h-problem-${cs.number}`}
+              >
+                <h4 id={`cs-h-problem-${cs.number}`} className="cs-block-title">
+                  PROBLEMA
+                </h4>
+                <ul>
+                  {cs.problem.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              </section>
 
-                <section
-                  className="cs-block cs-block--process"
-                  tabIndex={0}
-                  aria-labelledby={`cs-h-process-${cs.number}`}
-                >
-                  <h4 id={`cs-h-process-${cs.number}`} className="cs-block-title">
-                    PROCESSO
-                  </h4>
-                  <ol>
-                    {cs.process.map((item, i) => (
-                      <li key={i}>
-                        <span className="cs-num">{item.step}</span>
-                        <span>{item.description}</span>
-                      </li>
-                    ))}
-                  </ol>
-                </section>
+              <section
+                className="cs-block cs-block--process"
+                tabIndex={0}
+                aria-labelledby={`cs-h-process-${cs.number}`}
+              >
+                <h4 id={`cs-h-process-${cs.number}`} className="cs-block-title">
+                  PROCESSO
+                </h4>
+                <ol>
+                  {cs.process.map((item, i) => (
+                    <li key={i}>
+                      <span className="cs-num">{item.step}</span>
+                      <span>{item.description}</span>
+                    </li>
+                  ))}
+                </ol>
+              </section>
 
-                <section
-                  className="cs-block cs-block--solution"
-                  tabIndex={0}
-                  aria-labelledby={`cs-h-solution-${cs.number}`}
-                >
-                  <h4 id={`cs-h-solution-${cs.number}`} className="cs-block-title">
-                    SOLUÇÃO
-                  </h4>
-                  <div className="cs-tags">
-                    {cs.solution.tags.map((tag, i) => (
-                      <span key={i} className="cs-tag">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <ul>
-                    {cs.solution.features.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
-                </section>
+              <section
+                className="cs-block cs-block--solution"
+                tabIndex={0}
+                aria-labelledby={`cs-h-solution-${cs.number}`}
+              >
+                <h4 id={`cs-h-solution-${cs.number}`} className="cs-block-title">
+                  SOLUÇÃO
+                </h4>
+                <div className="cs-tags">
+                  {cs.solution.tags.map((tag, i) => (
+                    <span key={i} className="cs-tag">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <ul>
+                  {cs.solution.features.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              </section>
 
-                <section
-                  className="cs-block cs-block--result"
-                  tabIndex={0}
-                  aria-labelledby={`cs-h-result-${cs.number}`}
-                >
-                  <h4 id={`cs-h-result-${cs.number}`} className="cs-block-title">
-                    RESULTADO
-                  </h4>
-                  <p className="cs-result-lead">{cs.result.lead}</p>
-                  <div className="cs-mini">
-                    {cs.result.items.map((item, i) => (
-                      <div key={i} className="cs-mini-item">
-                        <strong>{item.label}</strong>
-                        <span>{item.description}</span>
-                      </div>
-                    ))}
-                  </div>
-                </section>
-              </div>
+              <section
+                className="cs-block cs-block--result"
+                tabIndex={0}
+                aria-labelledby={`cs-h-result-${cs.number}`}
+              >
+                <h4 id={`cs-h-result-${cs.number}`} className="cs-block-title">
+                  RESULTADO
+                </h4>
+                <p className="cs-result-lead">{cs.result.lead}</p>
+                <div className="cs-mini">
+                  {cs.result.items.map((item, i) => (
+                    <div key={i} className="cs-mini-item">
+                      <strong>{item.label}</strong>
+                      <span>{item.description}</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </div>
 
-              <div className="cs-cta-row">
-                <button
-                  className="cs-cta"
-                  type="button"
-                  onClick={() => openModal(cs.id)}
-                >
-                  Ver detalhes do case ↗
-                </button>
-              </div>
-            </article>
-          ))}
-        </div>
+            <div className="cs-cta-row">
+              <button
+                className="cs-cta"
+                type="button"
+                onClick={() => openModal(cs.id)}
+              >
+                Ver detalhes do case ↗
+              </button>
+            </div>
+          </article>
+        ))}
       </div>
 
       {CASE_STUDIES.map((cs) => (
