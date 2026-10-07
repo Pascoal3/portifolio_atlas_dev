@@ -231,6 +231,7 @@ export function CaseStudiesSection() {
           flex-direction: column;
           gap: 14px;
           min-width: 0;
+          overflow: auto;
         }
         #case-studies-section .cs-topbar {
           display: flex;
