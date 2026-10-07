@@ -303,6 +303,7 @@ export function CaseStudiesSection() {
         #case-studies-section .cs-intro {
           display: grid;
           gap: 10px;
+          padding-left: 2px;
         }
         #case-studies-section .cs-title {
           margin: 0;
