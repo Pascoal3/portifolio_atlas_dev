@@ -657,7 +657,9 @@ export function CaseStudiesSection() {
       `}</style>
 
       <header className="cs-head">
-        <p className="cs-eyebrow" id="cs-heading">CASE STUDIES / RESULTADOS</p>
+        <p className="text-xs uppercase tracking-[0.25em] mb-2 font-mono font-bold" style={{ color: 'var(--cs-ink)' }}>
+          08 - Caso de estudos e Resultados
+        </p>
         <p className="cs-sub">Projetos reais, contados pelo problema, pelo processo e pelo impacto.</p>
       </header>
 
