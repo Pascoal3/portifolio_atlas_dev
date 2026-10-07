@@ -238,7 +238,6 @@ export function CaseStudiesSection() {
         #case-studies-section .cs-topbar {
           display: flex;
           align-items: center;
-          gap: 10px;
           background: var(--cs-navy);
           color: #fff;
           border-radius: 999px;
@@ -657,8 +656,8 @@ export function CaseStudiesSection() {
       `}</style>
 
       <header className="cs-head">
-        <p className="text-xs uppercase tracking-[0.25em] mb-2 font-mono font-bold" style={{ color: 'var(--cs-ink)' }}>
-          08 - Caso de estudos e Resultados
+        <p className="text-xs font-bold uppercase tracking-[0.25em] text-black">
+           08 - Caso de estudos e Resultados
         </p>
         <p className="cs-sub">Projetos reais, contados pelo problema, pelo processo e pelo impacto.</p>
       </header>
@@ -667,7 +666,6 @@ export function CaseStudiesSection() {
         {CASE_STUDIES.map((cs) => (
           <article key={cs.id} className="cs-card">
             <div className="cs-topbar">
-              <span className="cs-pill cs-pill--lime">CASE STUDY {cs.number}</span>
               <span className="cs-topbar-label">{cs.subtitle}</span>
               <button
                 className="cs-round"
