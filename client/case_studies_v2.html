@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Studies - Atlas Dev Hero</title>
+  <style>
+#case-studies{
+  --cs-navy:#030817;--cs-lime:#C8FF00;--cs-blue:#2F68FF;--cs-off:#F5F4EE;--cs-ink:#0B0B0B;
+  --cs-r:16px;--cs-gap:20px;
+  box-sizing:border-box;position:relative;width:100%;
+  padding:clamp(36px,5vw,72px) clamp(16px,4vw,56px);
+  background:var(--cs-off);color:var(--cs-ink);
+  font-family:"Helvetica Neue",Arial,sans-serif;line-height:1.45;
+}
+#case-studies *,#case-studies *::before,#case-studies *::after{box-sizing:border-box}
+
+/* Cabeçalho + setas */
+#case-studies .cs-head{
+  max-width:1200px;margin:0 auto 24px;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+#case-studies .cs-eyebrow{margin:0 0 6px;font-weight:800;font-size:.78rem;letter-spacing:.16em;color:var(--cs-blue)}
+#case-studies .cs-sub{margin:0;font-size:1rem;max-width:60ch}
+#case-studies .cs-nav{display:flex;align-items:center;gap:10px}
+#case-studies .cs-count{font-weight:700;font-size:.85rem;letter-spacing:.1em;margin-right:6px}
+#case-studies .cs-count b{font-weight:900}
+#case-studies .cs-arrow{
+  width:48px;height:48px;border-radius:50%;cursor:pointer;
+  border:2px solid var(--cs-ink);background:var(--cs-ink);color:var(--cs-lime);
+  font-size:1.2rem;font-weight:800;line-height:1;
+  transition:background .2s,color .2s,transform .2s,opacity .2s;
+}
+#case-studies .cs-arrow:hover:not(:disabled){background:var(--cs-lime);color:var(--cs-ink);transform:translateY(-2px)}
+#case-studies .cs-arrow:disabled{opacity:.3;cursor:not-allowed}
+#case-studies .cs-arrow:focus-visible,#case-studies .cs-round:focus-visible,#case-studies .cs-cta:focus-visible,
+#case-studies .cs-close:focus-visible,#case-studies .cs-block:focus-visible,#case-studies .cs-track:focus-visible{
+  outline:3px solid var(--cs-blue);outline-offset:3px;
+}
+
+/* Carrossel */
+#case-studies .cs-viewport{max-width:1200px;margin:0 auto}
+#case-studies .cs-track{
+  display:flex;gap:var(--cs-gap);align-items:stretch;
+  overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+  scrollbar-width:none;-ms-overflow-style:none;padding:4px;margin:-4px;
+}
+#case-studies .cs-track::-webkit-scrollbar{display:none}
+
+/* Card compacto */
+#case-studies .cs-card{
+  flex:0 0 calc((100% - var(--cs-gap)) / 2);scroll-snap-align:start;
+  padding:14px;background:#fff;border:2px solid var(--cs-ink);border-radius:20px;
+  display:flex;flex-direction:column;gap:14px;min-width:0;
+}
+#case-studies .cs-topbar{
+  display:flex;align-items:center;gap:10px;
+  background:var(--cs-navy);color:#fff;border-radius:999px;padding:5px;
+}
+#case-studies .cs-topbar-label{flex:1;font-weight:700;font-size:.66rem;letter-spacing:.1em;text-align:right;padding-right:4px}
+#case-studies .cs-pill{
+  display:inline-block;margin:0;padding:8px 14px;border-radius:999px;
+  font-weight:800;font-size:.68rem;letter-spacing:.1em;white-space:nowrap;
+}
+#case-studies .cs-pill--lime{background:var(--cs-lime);color:var(--cs-ink)}
+#case-studies .cs-round{
+  flex:none;width:38px;height:38px;border-radius:50%;border:0;cursor:pointer;
+  background:var(--cs-blue);color:#fff;font-size:1.1rem;font-weight:700;
+  transition:transform .2s,background .2s,color .2s;
+}
+#case-studies .cs-round:hover{transform:rotate(45deg);background:var(--cs-lime);color:var(--cs-ink)}
+
+#case-studies .cs-shot{margin:0;padding:12px;background:var(--cs-navy);border-radius:var(--cs-r)}
+#case-studies .cs-shot img{
+  display:block;width:100%;height:auto;object-fit:contain;
+  border-radius:12px;border:2px solid var(--cs-lime);background:var(--cs-off);
+}
+
+#case-studies .cs-intro{display:grid;gap:10px}
+#case-studies .cs-title{
+  margin:0;font-weight:900;text-transform:uppercase;letter-spacing:-.04em;line-height:.88;
+  font-size:clamp(2.8rem,6vw,4.6rem);
+}
+#case-studies .cs-desc{margin:0;font-size:.88rem}
+#case-studies .cs-meta{margin:0;display:grid;gap:6px;border-top:2px solid var(--cs-ink);padding-top:10px}
+#case-studies .cs-meta div{display:grid;grid-template-columns:62px 1fr;gap:8px;font-size:.8rem}
+#case-studies .cs-meta dt{font-weight:800;letter-spacing:.1em;font-size:.66rem;padding-top:2px;color:var(--cs-blue)}
+#case-studies .cs-meta dd{margin:0}
+
+#case-studies .cs-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#case-studies .cs-block{
+  border-radius:var(--cs-r);padding:14px;border:2px solid var(--cs-ink);
+  transition:transform .2s,background .2s,color .2s,border-color .2s;
+}
+#case-studies .cs-block:hover,#case-studies .cs-block:focus-visible{transform:translateY(-3px)}
+#case-studies .cs-block-title{
+  margin:0 0 10px;font-weight:900;text-transform:uppercase;letter-spacing:.02em;
+  font-size:1.15rem;line-height:1;
+}
+#case-studies .cs-block ul,#case-studies .cs-block ol{margin:0;padding:0;list-style:none;display:grid;gap:7px;font-size:.78rem}
+#case-studies .cs-block ul li{position:relative;padding-left:15px}
+#case-studies .cs-block ul li::before{content:"";position:absolute;left:0;top:.5em;width:6px;height:6px;border-radius:2px;background:currentColor}
+
+#case-studies .cs-block--problem{background:var(--cs-lime);color:var(--cs-ink)}
+#case-studies .cs-block--problem:hover,#case-studies .cs-block--problem:focus-visible{background:var(--cs-ink);color:var(--cs-lime)}
+
+#case-studies .cs-block--process{background:var(--cs-navy);color:#fff}
+#case-studies .cs-block--process:hover,#case-studies .cs-block--process:focus-visible{border-color:var(--cs-lime)}
+#case-studies .cs-block--process ol li{display:grid;grid-template-columns:30px 1fr;gap:8px;align-items:start}
+#case-studies .cs-num{
+  display:inline-block;text-align:center;font-weight:900;font-size:.66rem;
+  background:var(--cs-lime);color:var(--cs-ink);border-radius:999px;padding:3px 0;
+}
+
+#case-studies .cs-block--solution{grid-column:1 / -1;background:var(--cs-off);color:var(--cs-ink)}
+#case-studies .cs-block--solution:hover,#case-studies .cs-block--solution:focus-visible{background:#fff;border-color:var(--cs-blue)}
+#case-studies .cs-block--solution ul{grid-template-columns:1fr 1fr;column-gap:14px}
+#case-studies .cs-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+#case-studies .cs-tag{
+  padding:5px 10px;border-radius:999px;font-weight:800;font-size:.62rem;letter-spacing:.1em;
+  background:var(--cs-blue);color:#fff;
+}
+#case-studies .cs-tag:nth-child(even){background:var(--cs-navy);color:var(--cs-lime)}
+
+#case-studies .cs-block--result{grid-column:1 / -1;background:var(--cs-blue);color:#fff}
+#case-studies .cs-block--result:hover,#case-studies .cs-block--result:focus-visible{background:var(--cs-lime);color:var(--cs-ink)}
+#case-studies .cs-result-lead{margin:0 0 12px;font-weight:800;font-size:1rem;line-height:1.25}
+#case-studies .cs-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+#case-studies .cs-mini-item{
+  background:var(--cs-navy);color:#fff;border-radius:12px;padding:10px;
+  display:grid;gap:4px;font-size:.72rem;align-content:start;
+}
+#case-studies .cs-mini-item strong{color:var(--cs-lime);letter-spacing:.1em;font-size:.62rem;font-weight:800}
+
+#case-studies .cs-cta-row{display:flex;justify-content:flex-end;margin-top:auto}
+#case-studies .cs-cta{
+  font:inherit;font-weight:800;font-size:.9rem;cursor:pointer;
+  padding:13px 22px;border-radius:999px;border:2px solid var(--cs-ink);
+  background:var(--cs-ink);color:var(--cs-lime);transition:background .2s,color .2s,transform .2s;
+}
+#case-studies .cs-cta:hover{background:var(--cs-lime);color:var(--cs-ink);transform:translateY(-2px)}
+
+/* Modal (contido na section) */
+#case-studies .cs-modal{
+  position:absolute;inset:0;z-index:20;display:flex;align-items:flex-start;justify-content:center;
+  padding:clamp(12px,3vw,40px);background:rgba(3,8,23,.82);overflow-y:auto;
+}
+#case-studies .cs-modal[hidden]{display:none}
+#case-studies .cs-modal-panel{
+  width:100%;max-width:820px;background:var(--cs-off);color:var(--cs-ink);
+  border:2px solid var(--cs-ink);border-radius:20px;padding:clamp(18px,3vw,36px);outline:none;
+}
+#case-studies .cs-modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px}
+#case-studies .cs-modal-title{margin:10px 0 0;font-weight:900;text-transform:uppercase;font-size:clamp(2.4rem,7vw,4.5rem);line-height:.9;letter-spacing:-.03em}
+#case-studies .cs-close{
+  font:inherit;font-weight:800;cursor:pointer;padding:12px 20px;border-radius:999px;
+  border:2px solid var(--cs-ink);background:var(--cs-lime);color:var(--cs-ink);
+}
+#case-studies .cs-close:hover{background:var(--cs-ink);color:var(--cs-lime)}
+#case-studies .cs-modal-body{display:grid;gap:14px}
+#case-studies .cs-modal-body section{border:2px solid var(--cs-ink);border-radius:14px;padding:18px;background:#fff}
+#case-studies .cs-modal-body section:nth-child(1){background:var(--cs-lime)}
+#case-studies .cs-modal-body section:nth-child(2){background:var(--cs-navy);color:#fff}
+#case-studies .cs-modal-body section:nth-child(4){background:var(--cs-blue);color:#fff}
+#case-studies .cs-modal-body h4{margin:0 0 8px;font-weight:900;letter-spacing:.06em;font-size:1.1rem}
+#case-studies .cs-modal-body p{margin:0}
+
+/* Tablet e mobile: 1 card por vez */
+@media (max-width:900px){
+  #case-studies .cs-card{flex-basis:100%}
+}
+@media (max-width:560px){
+  #case-studies .cs-grid{grid-template-columns:1fr}
+  #case-studies .cs-block--solution ul{grid-template-columns:1fr}
+  #case-studies .cs-mini{grid-template-columns:1fr}
+  #case-studies .cs-topbar{flex-wrap:wrap;border-radius:18px}
+  #case-studies .cs-topbar-label{order:3;flex-basis:100%;text-align:left;padding:2px 10px 8px}
+  #case-studies .cs-round{margin-left:auto}
+  #case-studies .cs-meta div{grid-template-columns:1fr;gap:2px}
+  #case-studies .cs-cta-row{justify-content:stretch}
+  #case-studies .cs-cta{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  #case-studies *{transition:none!important}
+  #case-studies .cs-track{scroll-behavior:auto}
+}
+  </style>
+</head>
+<body>
+  <section id="case-studies" aria-labelledby="cs-heading">
+    <header class="cs-head">
+      <div class="cs-head-text">
+        <p class="cs-eyebrow" id="cs-heading">CASE STUDIES / RESULTADOS</p>
+        <p class="cs-sub">Projetos reais, contados pelo problema, pelo processo e pelo impacto.</p>
+      </div>
+      <div class="cs-nav" aria-label="Navegação do carrossel">
+        <span class="cs-count" aria-live="polite"><b data-cs-current>01</b> / <span data-cs-total>02</span></span>
+        <button type="button" class="cs-arrow" data-cs-prev aria-label="Case anterior">←</button>
+        <button type="button" class="cs-arrow" data-cs-next aria-label="Próximo case">→</button>
+      </div>
+    </header>
+
+    <div class="cs-viewport">
+      <div class="cs-track" tabindex="0" aria-label="Lista de case studies">
+
+        <!-- CARD 01 -->
+        <article class="cs-card" data-cs-card>
+          <div class="cs-topbar">
+            <span class="cs-pill cs-pill--lime">CASE STUDY 01</span>
+            <span class="cs-topbar-label">FREELANCE PLATFORM · ANGOLA</span>
+            <button class="cs-round" type="button" aria-label="Ver detalhes do case 01" data-cs-open="cs-modal-1">↗</button>
+          </div>
+
+          <figure class="cs-shot">
+            <img src="./assets/skilla-home.png" alt="Screenshot da homepage da Skilla" loading="lazy">
+          </figure>
+
+          <div class="cs-intro">
+            <h3 class="cs-title">SKILLA.</h3>
+            <p class="cs-desc">Uma plataforma freelance voltada ao mercado angolano para conectar clientes e freelancers com mais confiança, organização e segurança nos pagamentos.</p>
+            <dl class="cs-meta">
+              <div><dt>PAPEL</dt><dd>Produto + Desenvolvimento Full-stack</dd></div>
+              <div><dt>STACK</dt><dd>Laravel · Blade · MySQL/PostgreSQL · WebSockets · Cron/Scheduler</dd></div>
+            </dl>
+          </div>
+
+          <div class="cs-grid">
+            <section class="cs-block cs-block--problem" tabindex="0" aria-labelledby="cs-h-problem-1">
+              <h4 id="cs-h-problem-1" class="cs-block-title">PROBLEMA</h4>
+              <ul>
+                <li>Baixa confiança entre clientes e freelancers.</li>
+                <li>Comunicação, ficheiros e prazos dispersos entre WhatsApp e redes sociais.</li>
+                <li>Pagamentos sem garantias para ambas as partes.</li>
+                <li>Falta de disputas, auditoria e rastreabilidade financeira.</li>
+              </ul>
+            </section>
+
+            <section class="cs-block cs-block--process" tabindex="0" aria-labelledby="cs-h-process-1">
+              <h4 id="cs-h-process-1" class="cs-block-title">PROCESSO</h4>
+              <ol>
+                <li><span class="cs-num">01</span><span>Mapeamento do fluxo: job → proposta → contrato → entrega → aprovação/disputa → avaliação.</span></li>
+                <li><span class="cs-num">02</span><span>Modelagem de dados para auditoria, histórico e transações.</span></li>
+                <li><span class="cs-num">03</span><span>Regras para retenção, liberação, reembolso e expiração.</span></li>
+                <li><span class="cs-num">04</span><span>Desenvolvimento modular: perfis → jobs → contratos → financeiro → chat → automações.</span></li>
+              </ol>
+            </section>
+
+            <section class="cs-block cs-block--solution" tabindex="0" aria-labelledby="cs-h-solution-1">
+              <h4 id="cs-h-solution-1" class="cs-block-title">SOLUÇÃO</h4>
+              <div class="cs-tags">
+                <span class="cs-tag">ESCROW</span>
+                <span class="cs-tag">CHAT REAL-TIME</span>
+                <span class="cs-tag">DISPUTAS</span>
+                <span class="cs-tag">AUTOMAÇÕES</span>
+              </div>
+              <ul>
+                <li>Wizard de jobs em 5 etapas com rascunhos.</li>
+                <li>Sistema de propostas com créditos.</li>
+                <li>Wallet e pagamento escrow transacional.</li>
+                <li>Chat em tempo real e partilha de ficheiros.</li>
+                <li>Disputas, reembolsos e avaliações bilaterais.</li>
+                <li>Cron Jobs para expiração de vagas e automações.</li>
+              </ul>
+            </section>
+
+            <section class="cs-block cs-block--result" tabindex="0" aria-labelledby="cs-h-result-1">
+              <h4 id="cs-h-result-1" class="cs-block-title">RESULTADO</h4>
+              <p class="cs-result-lead">Um fluxo de contratação mais seguro, centralizado e rastreável para clientes e freelancers.</p>
+              <div class="cs-mini">
+                <div class="cs-mini-item"><strong>SEGURANÇA</strong><span>Mais proteção através de wallet, escrow e disputas.</span></div>
+                <div class="cs-mini-item"><strong>CENTRALIZAÇÃO</strong><span>Propostas, comunicação, entregas e histórico num único ambiente.</span></div>
+                <div class="cs-mini-item"><strong>ESCALABILIDADE</strong><span>Arquitetura modular pronta para monetização, KYC, 2FA e integração com Multicaixa.</span></div>
+              </div>
+            </section>
+          </div>
+
+          <div class="cs-cta-row">
+            <button class="cs-cta" type="button" data-cs-open="cs-modal-1">Ver detalhes do case ↗</button>
+          </div>
+        </article>
+
+        <!-- CARD 02 (duplicado: troca o conteúdo, a imagem e os ids quando tiveres o novo case) -->
+        <article class="cs-card" data-cs-card>
+          <div class="cs-topbar">
+            <span class="cs-pill cs-pill--lime">CASE STUDY 02</span>
+            <span class="cs-topbar-label">FREELANCE PLATFORM · ANGOLA</span>
+            <button class="cs-round" type="button" aria-label="Ver detalhes do case 02" data-cs-open="cs-modal-2">↗</button>
+          </div>
+
+          <figure class="cs-shot">
+            <img src="./assets/skilla-home.png" alt="Screenshot da homepage da Skilla" loading="lazy">
+          </figure>
+
+          <div class="cs-intro">
+            <h3 class="cs-title">SKILLA.</h3>
+            <p class="cs-desc">Uma plataforma freelance voltada ao mercado angolano para conectar clientes e freelancers com mais confiança, organização e segurança nos pagamentos.</p>
+            <dl class="cs-meta">
+              <div><dt>PAPEL</dt><dd>Produto + Desenvolvimento Full-stack</dd></div>
+              <div><dt>STACK</dt><dd>Laravel · Blade · MySQL/PostgreSQL · WebSockets · Cron/Scheduler</dd></div>
+            </dl>
+          </div>
+
+          <div class="cs-grid">
+            <section class="cs-block cs-block--problem" tabindex="0" aria-labelledby="cs-h-problem-2">
+              <h4 id="cs-h-problem-2" class="cs-block-title">PROBLEMA</h4>
+              <ul>
+                <li>Baixa confiança entre clientes e freelancers.</li>
+                <li>Comunicação, ficheiros e prazos dispersos entre WhatsApp e redes sociais.</li>
+                <li>Pagamentos sem garantias para ambas as partes.</li>
+                <li>Falta de disputas, auditoria e rastreabilidade financeira.</li>
+              </ul>
+            </section>
+
+            <section class="cs-block cs-block--process" tabindex="0" aria-labelledby="cs-h-process-2">
+              <h4 id="cs-h-process-2" class="cs-block-title">PROCESSO</h4>
+              <ol>
+                <li><span class="cs-num">01</span><span>Mapeamento do fluxo: job → proposta → contrato → entrega → aprovação/disputa → avaliação.</span></li>
+                <li><span class="cs-num">02</span><span>Modelagem de dados para auditoria, histórico e transações.</span></li>
+                <li><span class="cs-num">03</span><span>Regras para retenção, liberação, reembolso e expiração.</span></li>
+                <li><span class="cs-num">04</span><span>Desenvolvimento modular: perfis → jobs → contratos → financeiro → chat → automações.</span></li>
+              </ol>
+            </section>
+
+            <section class="cs-block cs-block--solution" tabindex="0" aria-labelledby="cs-h-solution-2">
+              <h4 id="cs-h-solution-2" class="cs-block-title">SOLUÇÃO</h4>
+              <div class="cs-tags">
+                <span class="cs-tag">ESCROW</span>
+                <span class="cs-tag">CHAT REAL-TIME</span>
+                <span class="cs-tag">DISPUTAS</span>
+                <span class="cs-tag">AUTOMAÇÕES</span>
+              </div>
+              <ul>
+                <li>Wizard de jobs em 5 etapas com rascunhos.</li>
+                <li>Sistema de propostas com créditos.</li>
+                <li>Wallet e pagamento escrow transacional.</li>
+                <li>Chat em tempo real e partilha de ficheiros.</li>
+                <li>Disputas, reembolsos e avaliações bilaterais.</li>
+                <li>Cron Jobs para expiração de vagas e automações.</li>
+              </ul>
+            </section>
+
+            <section class="cs-block cs-block--result" tabindex="0" aria-labelledby="cs-h-result-2">
+              <h4 id="cs-h-result-2" class="cs-block-title">RESULTADO</h4>
+              <p class="cs-result-lead">Um fluxo de contratação mais seguro, centralizado e rastreável para clientes e freelancers.</p>
+              <div class="cs-mini">
+                <div class="cs-mini-item"><strong>SEGURANÇA</strong><span>Mais proteção através de wallet, escrow e disputas.</span></div>
+                <div class="cs-mini-item"><strong>CENTRALIZAÇÃO</strong><span>Propostas, comunicação, entregas e histórico num único ambiente.</span></div>
+                <div class="cs-mini-item"><strong>ESCALABILIDADE</strong><span>Arquitetura modular pronta para monetização, KYC, 2FA e integração com Multicaixa.</span></div>
+              </div>
+            </section>
+          </div>
+
+          <div class="cs-cta-row">
+            <button class="cs-cta" type="button" data-cs-open="cs-modal-2">Ver detalhes do case ↗</button>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- MODAL CARD 01 -->
+    <div class="cs-modal" id="cs-modal-1" role="dialog" aria-modal="true" aria-labelledby="cs-modal-title-1" hidden>
+      <div class="cs-modal-panel" tabindex="-1">
+        <div class="cs-modal-head">
+          <div>
+            <p class="cs-pill cs-pill--lime">CASE STUDY 01</p>
+            <h3 id="cs-modal-title-1" class="cs-modal-title">SKILLA.</h3>
+          </div>
+          <button type="button" class="cs-close" data-cs-close>Fechar</button>
+        </div>
+        <div class="cs-modal-body">
+          <section>
+            <h4>PROBLEMA</h4>
+            <p>A contratação de freelancers em Angola acontecia sobretudo fora de um ambiente estruturado, com baixa confiança entre as partes, comunicação e ficheiros dispersos entre WhatsApp e redes sociais, pagamentos sem garantias e ausência de disputas, auditoria e rastreabilidade financeira.</p>
+          </section>
+          <section>
+            <h4>PROCESSO</h4>
+            <p>Mapeei o fluxo completo (job → proposta → contrato → entrega → aprovação/disputa → avaliação), modelei os dados para auditoria, histórico e transações, defini regras de retenção, liberação, reembolso e expiração, e desenvolvi de forma modular: perfis, jobs, contratos, financeiro, chat e automações.</p>
+          </section>
+          <section>
+            <h4>SOLUÇÃO</h4>
+            <p>Wizard de jobs em 5 etapas com rascunhos, propostas com créditos, wallet e pagamento escrow transacional, chat em tempo real com partilha de ficheiros, disputas, reembolsos e avaliações bilaterais, e Cron Jobs para expiração de vagas e automações.</p>
+          </section>
+          <section>
+            <h4>RESULTADO</h4>
+            <p>Um fluxo de contratação mais seguro, centralizado e rastreável para clientes e freelancers, com uma arquitetura modular pronta para monetização, KYC, 2FA e integração com Multicaixa.</p>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL CARD 02 (duplicado) -->
+    <div class="cs-modal" id="cs-modal-2" role="dialog" aria-modal="true" aria-labelledby="cs-modal-title-2" hidden>
+      <div class="cs-modal-panel" tabindex="-1">
+        <div class="cs-modal-head">
+          <div>
+            <p class="cs-pill cs-pill--lime">CASE STUDY 02</p>
+            <h3 id="cs-modal-title-2" class="cs-modal-title">SKILLA.</h3>
+          </div>
+          <button type="button" class="cs-close" data-cs-close>Fechar</button>
+        </div>
+        <div class="cs-modal-body">
+          <section>
+            <h4>PROBLEMA</h4>
+            <p>A contratação de freelancers em Angola acontecia sobretudo fora de um ambiente estruturado, com baixa confiança entre as partes, comunicação e ficheiros dispersos entre WhatsApp e redes sociais, pagamentos sem garantias e ausência de disputas, auditoria e rastreabilidade financeira.</p>
+          </section>
+          <section>
+            <h4>PROCESSO</h4>
+            <p>Mapeei o fluxo completo (job → proposta → contrato → entrega → aprovação/disputa → avaliação), modelei os dados para auditoria, histórico e transações, defini regras de retenção, liberação, reembolso e expiração, e desenvolvi de forma modular: perfis, jobs, contratos, financeiro, chat e automações.</p>
+          </section>
+          <section>
+            <h4>SOLUÇÃO</h4>
+            <p>Wizard de jobs em 5 etapas com rascunhos, propostas com créditos, wallet e pagamento escrow transacional, chat em tempo real com partilha de ficheiros, disputas, reembolsos e avaliações bilaterais, e Cron Jobs para expiração de vagas e automações.</p>
+          </section>
+          <section>
+            <h4>RESULTADO</h4>
+            <p>Um fluxo de contratação mais seguro, centralizado e rastreável para clientes e freelancers, com uma arquitetura modular pronta para monetização, KYC, 2FA e integração com Multicaixa.</p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+(function(){
+  var root=document.getElementById('case-studies');
+  if(!root)return;
+
+  /* ---------- Carrossel ---------- */
+  var track=root.querySelector('.cs-track');
+  var cards=root.querySelectorAll('[data-cs-card]');
+  var prev=root.querySelector('[data-cs-prev]');
+  var next=root.querySelector('[data-cs-next]');
+  var cur=root.querySelector('[data-cs-current]');
+  var tot=root.querySelector('[data-cs-total]');
+
+  function pad(n){return n<10?'0'+n:''+n;}
+  function step(){
+    if(!cards.length)return 0;
+    var gap=parseFloat(getComputedStyle(track).columnGap)||0;
+    return cards[0].getBoundingClientRect().width+gap;
+  }
+  function visible(){
+    var s=step();
+    return s?Math.max(1,Math.round(track.clientWidth/s)):1;
+  }
+  function update(){
+    var s=step();
+    var idx=s?Math.round(track.scrollLeft/s):0;
+    var maxIdx=Math.max(0,cards.length-visible());
+    prev.disabled=track.scrollLeft<=2;
+    next.disabled=idx>=maxIdx||track.scrollLeft+track.clientWidth>=track.scrollWidth-2;
+    cur.textContent=pad(Math.min(idx+1,cards.length));
+    tot.textContent=pad(cards.length);
+  }
+  function go(dir){track.scrollBy({left:dir*step(),behavior:'smooth'});}
+
+  prev.addEventListener('click',function(){go(-1);});
+  next.addEventListener('click',function(){go(1);});
+  track.addEventListener('scroll',function(){window.requestAnimationFrame(update);},{passive:true});
+  window.addEventListener('resize',update);
+  track.addEventListener('keydown',function(e){
+    if(e.target!==track)return;
+    if(e.key==='ArrowRight'){e.preventDefault();go(1);}
+    if(e.key==='ArrowLeft'){e.preventDefault();go(-1);}
+  });
+  update();
+
+  /* ---------- Modais ---------- */
+  var openers=root.querySelectorAll('[data-cs-open]');
+  var modals=root.querySelectorAll('.cs-modal');
+  var lastFocus=null;
+
+  function openModal(id){
+    var modal=root.querySelector('#'+id);
+    if(!modal)return;
+    lastFocus=document.activeElement;
+    modal.hidden=false;
+    modal.querySelector('.cs-modal-panel').focus();
+    var top=root.getBoundingClientRect().top;
+    if(top<0||top>window.innerHeight*0.5){root.scrollIntoView({behavior:'smooth',block:'start'});}
+  }
+  function closeAll(){
+    var any=false;
+    modals.forEach(function(m){if(!m.hidden){m.hidden=true;any=true;}});
+    if(any&&lastFocus&&lastFocus.focus)lastFocus.focus();
+  }
+
+  openers.forEach(function(b){
+    b.addEventListener('click',function(){openModal(b.getAttribute('data-cs-open'));});
+  });
+  modals.forEach(function(m){
+    m.addEventListener('click',function(e){if(e.target===m)closeAll();});
+    var c=m.querySelector('[data-cs-close]');
+    if(c)c.addEventListener('click',closeAll);
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape')closeAll();
+  });
+})();
+  </script>
+</body>
+</html>
