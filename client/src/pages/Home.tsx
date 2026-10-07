@@ -5,6 +5,7 @@ import FlowArt, { FlowSection } from "@/components/ui/story-scroll";
 import { InteractiveHoverLinks, type InteractiveLinkItem } from "@/components/ui/interactive-hover-links";
 import { ProcessBento } from "@/components/ui/process-bento";
 import { StackMarquee } from "@/components/ui/stack-marquee";
+import { CaseStudiesSection } from "@/components/ui/case-studies-section";
 import { Globe, Layout, Palette, Brush, Zap, Monitor } from "lucide-react";
 
 const WORKS: WorksWheelItem[] = [
@@ -344,6 +345,15 @@ export default function Home() {
           style={{ backgroundColor: '#000000', color: '#ffffff' }}
         >
           <StackMarquee />
+        </FlowSection>
+
+        {/* SEÇÃO 8: Case Studies */}
+        <FlowSection
+          id="case-studies"
+          aria-label="Case Studies & Resultados"
+          style={{ backgroundColor: '#F5F4EE', color: '#0B0B0B' }}
+        >
+          <CaseStudiesSection />
         </FlowSection>
       </FlowArt>
     </>

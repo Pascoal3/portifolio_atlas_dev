@@ -203,7 +203,7 @@ function MarqueeRow({ items, reverse = false, duration = 45 }: { items: TechCard
         {doubleList.map((item, index) => (
           <div
             key={`${item.name}-${index}`}
-            className="shrink-0 relative flex flex-col justify-between w-[190px] h-[112px] md:w-[230px] md:h-[130px] mr-3.5 p-4 md:p-5 rounded-3xl text-white overflow-hidden transition-transform duration-300 hover:-translate-y-1"
+            className="shrink-0 relative flex flex-col justify-between w-[190px] h-[112px] md:w-[230px] md:h-[130px] mr-3.5 p-4 md:p-5 rounded-3xl text-white overflow-hidden"
             style={{ backgroundColor: item.color }}
           >
             <CardStamp color={item.color}>{item.icon}</CardStamp>
@@ -241,8 +241,8 @@ export function StackMarquee() {
       `}</style>
 
       <div className="mb-6 md:mb-8 border-b border-white/10 pb-4">
-        <p className="text-xs uppercase tracking-[0.25em] text-white/50 mb-2 font-mono">
-          07 — Skills & Stack
+        <p className="text-xs font-bold uppercase tracking-[0.25em] text-white">
+          07 - Skills & Stack
         </p>
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
           <h2
