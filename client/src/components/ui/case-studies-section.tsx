@@ -193,6 +193,7 @@ export function CaseStudiesSection() {
           color: var(--cs-ink);
           font-family: "Helvetica Neue", Arial, sans-serif;
           line-height: 1.45;
+          overflow-x: hidden;
         }
         #case-studies-section *,
         #case-studies-section *::before,
@@ -231,6 +232,8 @@ export function CaseStudiesSection() {
           flex-direction: column;
           gap: 14px;
           min-width: 0;
+          overflow: hidden;
+          width: 100%;
         }
         #case-studies-section .cs-topbar {
           display: flex;
@@ -303,7 +306,8 @@ export function CaseStudiesSection() {
         #case-studies-section .cs-intro {
           display: grid;
           gap: 10px;
-          padding-left: 2px;
+          width: 100%;
+          max-width: 100%;
         }
         #case-studies-section .cs-title {
           margin: 0;
@@ -312,10 +316,18 @@ export function CaseStudiesSection() {
           letter-spacing: -.04em;
           line-height: .88;
           font-size: clamp(2.2rem, 5vw, 3.6rem);
+          overflow-wrap: anywhere;
+          word-break: break-word;
+          width: 100%;
+          max-width: 100%;
         }
         #case-studies-section .cs-desc {
           margin: 0;
           font-size: .88rem;
+          overflow-wrap: anywhere;
+          word-break: break-word;
+          width: 100%;
+          max-width: 100%;
         }
         #case-studies-section .cs-meta {
           margin: 0;
@@ -323,6 +335,9 @@ export function CaseStudiesSection() {
           gap: 4px;
           border-top: 2px solid var(--cs-ink);
           padding-top: 8px;
+          width: 100%;
+          max-width: 100%;
+          overflow: hidden;
         }
         #case-studies-section .cs-meta div {
           display: grid;
