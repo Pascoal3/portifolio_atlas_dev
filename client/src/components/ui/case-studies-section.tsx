@@ -313,11 +313,12 @@ export function CaseStudiesSection() {
           margin: 0;
           font-weight: 900;
           text-transform: uppercase;
-          letter-spacing: -.04em;
-          line-height: .88;
-          font-size: clamp(2.2rem, 5vw, 3.6rem);
+          letter-spacing: -.03em;
+          line-height: .95;
+          font-size: clamp(2rem, 4vw, 3.2rem);
+          text-wrap: balance;
           overflow-wrap: anywhere;
-          word-break: break-word;
+          word-break: normal;
           width: 100%;
           max-width: 100%;
         }
