@@ -212,7 +212,7 @@
           </div>
 
           <figure class="cs-shot">
-            <img src="../public/case_studies/skilla-home.png" alt="Screenshot da homepage da Skilla" loading="lazy">
+            <img src="./assets/skilla-home.png" alt="Screenshot da homepage da Skilla" loading="lazy">
           </figure>
 
           <div class="cs-intro">
@@ -279,24 +279,24 @@
           </div>
         </article>
 
-        <!-- CARD 02 (duplicado: troca o conteúdo, a imagem e os ids quando tiveres o novo case) -->
+        <!-- CARD 02 – CRM Personalizado -->
         <article class="cs-card" data-cs-card>
           <div class="cs-topbar">
             <span class="cs-pill cs-pill--lime">CASE STUDY 02</span>
-            <span class="cs-topbar-label">FREELANCE PLATFORM · ANGOLA</span>
+            <span class="cs-topbar-label">CRM PERSONALIZADO · B2B / FERRAMENTA INTERNA (SALES CRM)</span>
             <button class="cs-round" type="button" aria-label="Ver detalhes do case 02" data-cs-open="cs-modal-2">↗</button>
           </div>
 
           <figure class="cs-shot">
-            <img src="../public/case_studies/crm-home.png" alt="Screenshot da homepage do CRM" loading="lazy">
+            <img src="./assets/crm-home.png" alt="Screenshot do CRM Personalizado" loading="lazy">
           </figure>
 
           <div class="cs-intro">
-            <h3 class="cs-title">SKILLA.</h3>
-            <p class="cs-desc">Uma plataforma freelance voltada ao mercado angolano para conectar clientes e freelancers com mais confiança, organização e segurança nos pagamentos.</p>
+            <h3 class="cs-title">CRM PERSONALIZADO.</h3>
+            <p class="cs-desc">CRM interno de prospecção e gestão de clientes, focado em pipeline claro, follow-ups automáticos e histórico centralizado para equipas de vendas.</p>
             <dl class="cs-meta">
-              <div><dt>PAPEL</dt><dd>Produto + Desenvolvimento Full-stack</dd></div>
-              <div><dt>STACK</dt><dd>Laravel · Blade · MySQL/PostgreSQL · WebSockets · Cron/Scheduler</dd></div>
+              <div><dt>PAPEL</dt><dd>UI/UX + Frontend + Arquitetura</dd></div>
+              <div><dt>STACK</dt><dd>Next.js 16 · React 19 · TypeScript</dd></div>
             </dl>
           </div>
 
@@ -304,48 +304,54 @@
             <section class="cs-block cs-block--problem" tabindex="0" aria-labelledby="cs-h-problem-2">
               <h4 id="cs-h-problem-2" class="cs-block-title">PROBLEMA</h4>
               <ul>
-                <li>Baixa confiança entre clientes e freelancers.</li>
-                <li>Comunicação, ficheiros e prazos dispersos entre WhatsApp e redes sociais.</li>
-                <li>Pagamentos sem garantias para ambas as partes.</li>
-                <li>Falta de disputas, auditoria e rastreabilidade financeira.</li>
+                <li>Leads espalhados por WhatsApp, Sheets e notas soltas.</li>
+                <li>Falta de pipeline claro (em que etapa cada lead está).</li>
+                <li>Follow-ups esquecidos → oportunidades perdidas.</li>
+                <li>Ausência de histórico e rastreio (quem falou com quem, quando, e o que ficou combinado).</li>
               </ul>
             </section>
 
             <section class="cs-block cs-block--process" tabindex="0" aria-labelledby="cs-h-process-2">
               <h4 id="cs-h-process-2" class="cs-block-title">PROCESSO</h4>
               <ol>
-                <li><span class="cs-num">01</span><span>Mapeamento do fluxo: job → proposta → contrato → entrega → aprovação/disputa → avaliação.</span></li>
-                <li><span class="cs-num">02</span><span>Modelagem de dados para auditoria, histórico e transações.</span></li>
-                <li><span class="cs-num">03</span><span>Regras para retenção, liberação, reembolso e expiração.</span></li>
-                <li><span class="cs-num">04</span><span>Desenvolvimento modular: perfis → jobs → contratos → financeiro → chat → automações.</span></li>
+                <li><span class="cs-num">01</span><span>Mapeamento do fluxo de vendas: desde lead frio até conversão.</span></li>
+                <li><span class="cs-num">02</span><span>Definição do pipeline: etapas, regras, campos essenciais e “próxima ação”.</span></li>
+                <li><span class="cs-num">03</span><span>UI/UX: interface rápida (menos cliques, mais operação), foco em produtividade.</span></li>
+                <li><span class="cs-num">04</span><span>Implementação web app: componentes reutilizáveis, tipagem forte (TS) e estado previsível.</span></li>
+                <li><span class="cs-num">05</span><span>Testes com uso real: ajustes por fricção e tempo de operação.</span></li>
+                <li><span class="cs-num">06</span><span>Entrega: deploy + documentação mínima para uso diário.</span></li>
               </ol>
             </section>
 
             <section class="cs-block cs-block--solution" tabindex="0" aria-labelledby="cs-h-solution-2">
               <h4 id="cs-h-solution-2" class="cs-block-title">SOLUÇÃO</h4>
               <div class="cs-tags">
-                <span class="cs-tag">ESCROW</span>
-                <span class="cs-tag">CHAT REAL-TIME</span>
-                <span class="cs-tag">DISPUTAS</span>
-                <span class="cs-tag">AUTOMAÇÕES</span>
+                <span class="cs-tag">PIPELINE/KANBAN</span>
+                <span class="cs-tag">HISTÓRICO DO LEAD</span>
+                <span class="cs-tag">TAREFAS & LEMBRETES</span>
+                <span class="cs-tag">PESQUISA & FILTROS</span>
+                <span class="cs-tag">NOTAS & TAGS</span>
+                <span class="cs-tag">PERMISSÕES</span>
+                <span class="cs-tag">EXPORTAÇÃO CSV</span>
               </div>
               <ul>
-                <li>Wizard de jobs em 5 etapas com rascunhos.</li>
-                <li>Sistema de propostas com créditos.</li>
-                <li>Wallet e pagamento escrow transacional.</li>
-                <li>Chat em tempo real e partilha de ficheiros.</li>
-                <li>Disputas, reembolsos e avaliações bilaterais.</li>
-                <li>Cron Jobs para expiração de vagas e automações.</li>
+                <li>Pipeline/Kanban por etapas (Lead → Qualificação → Proposta → Fechado).</li>
+                <li>Perfil do lead/cliente com histórico completo.</li>
+                <li>Tarefas & lembretes automáticos de follow-up.</li>
+                <li>Pesquisa e filtros rápidos.</li>
+                <li>Notas e tags para segmentação.</li>
+                <li>Permissões por papel (se houver equipa).</li>
+                <li>Exportação (CSV) / importação de dados.</li>
               </ul>
             </section>
 
             <section class="cs-block cs-block--result" tabindex="0" aria-labelledby="cs-h-result-2">
               <h4 id="cs-h-result-2" class="cs-block-title">RESULTADO</h4>
-              <p class="cs-result-lead">Um fluxo de contratação mais seguro, centralizado e rastreável para clientes e freelancers.</p>
+              <p class="cs-result-lead">Organização imediata da operação comercial: tudo num só lugar, menos leads perdidos por esquecimento e velocidade de decisão com pipeline claro e histórico acessível.</p>
               <div class="cs-mini">
-                <div class="cs-mini-item"><strong>SEGURANÇA</strong><span>Mais proteção através de wallet, escrow e disputas.</span></div>
-                <div class="cs-mini-item"><strong>CENTRALIZAÇÃO</strong><span>Propostas, comunicação, entregas e histórico num único ambiente.</span></div>
-                <div class="cs-mini-item"><strong>ESCALABILIDADE</strong><span>Arquitetura modular pronta para monetização, KYC, 2FA e integração com Multicaixa.</span></div>
+                <div class="cs-mini-item"><strong>ORGANIZAÇÃO</strong><span>Centralização de leads, tarefas e comunicação.</span></div>
+                <div class="cs-mini-item"><strong>EFICIÊNCIA</strong><span>Follow-up integrado ao fluxo, redução de horas manuais.</span></div>
+                <div class="cs-mini-item"><strong>ESCALABILIDADE</strong><span>Arquitetura modular pronta para automações, scoring e integrações (e‑mail/WhatsApp).</span></div>
               </div>
             </section>
           </div>
@@ -389,32 +395,32 @@
       </div>
     </div>
 
-    <!-- MODAL CARD 02 (duplicado) -->
+    <!-- MODAL CARD 02 – CRM Personalizado -->
     <div class="cs-modal" id="cs-modal-2" role="dialog" aria-modal="true" aria-labelledby="cs-modal-title-2" hidden>
       <div class="cs-modal-panel" tabindex="-1">
         <div class="cs-modal-head">
           <div>
             <p class="cs-pill cs-pill--lime">CASE STUDY 02</p>
-            <h3 id="cs-modal-title-2" class="cs-modal-title">SKILLA.</h3>
+            <h3 id="cs-modal-title-2" class="cs-modal-title">CRM PERSONALIZADO.</h3>
           </div>
           <button type="button" class="cs-close" data-cs-close>Fechar</button>
         </div>
         <div class="cs-modal-body">
           <section>
             <h4>PROBLEMA</h4>
-            <p>A contratação de freelancers em Angola acontecia sobretudo fora de um ambiente estruturado, com baixa confiança entre as partes, comunicação e ficheiros dispersos entre WhatsApp e redes sociais, pagamentos sem garantias e ausência de disputas, auditoria e rastreabilidade financeira.</p>
+            <p>Leads espalhados por WhatsApp, Sheets e notas soltas; ausência de pipeline claro; follow-ups esquecidos gerando oportunidades perdidas; nenhum histórico centralizado de interações.</p>
           </section>
           <section>
             <h4>PROCESSO</h4>
-            <p>Mapeei o fluxo completo (job → proposta → contrato → entrega → aprovação/disputa → avaliação), modelei os dados para auditoria, histórico e transações, defini regras de retenção, liberação, reembolso e expiração, e desenvolvi de forma modular: perfis, jobs, contratos, financeiro, chat e automações.</p>
+            <p>Mapeamento do funil de vendas (lead frio → conversão), definição de etapas e “próxima ação”, design de UI focada em velocidade (menos cliques), implementação com Next.js 16, React 19 e TypeScript, componentes reutilizáveis e estado tipado, testes de usabilidade com a equipa de vendas, deploy e documentação mínima.</p>
           </section>
           <section>
             <h4>SOLUÇÃO</h4>
-            <p>Wizard de jobs em 5 etapas com rascunhos, propostas com créditos, wallet e pagamento escrow transacional, chat em tempo real com partilha de ficheiros, disputas, reembolsos e avaliações bilaterais, e Cron Jobs para expiração de vagas e automações.</p>
+            <p>Pipeline/Kanban (Lead → Qualificação → Proposta → Fechado), ficha do lead com histórico, tarefas e lembretes automáticos de follow-up, pesquisa/filtros rápidos, notas e tags, permissões por papel, exportação/importação CSV. Arquitetura preparada para automações (e‑mail/WhatsApp) e scoring futuro.</p>
           </section>
           <section>
             <h4>RESULTADO</h4>
-            <p>Um fluxo de contratação mais seguro, centralizado e rastreável para clientes e freelancers, com uma arquitetura modular pronta para monetização, KYC, 2FA e integração com Multicaixa.</p>
+            <p>Operação comercial organizada num único local, redução drástica de leads perdidos por esquecimento, decisões mais rápidas graças a pipeline visível e histórico acessível. Base sólida para adicionar integrações e métricas (tempo de follow-up, taxa de conversão, horas poupadas).</p>
           </section>
         </div>
       </div>
