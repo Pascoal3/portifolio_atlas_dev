@@ -238,18 +238,16 @@ export function CaseStudiesSection() {
         #case-studies-section .cs-topbar {
           display: flex;
           align-items: center;
+          justify-content: space-between;
           background: var(--cs-navy);
           color: #fff;
           border-radius: 999px;
           padding: 5px;
         }
         #case-studies-section .cs-topbar-label {
-          flex: 1;
           font-weight: 700;
           font-size: .66rem;
           letter-spacing: .1em;
-          text-align: right;
-          padding-right: 4px;
         }
         #case-studies-section .cs-pill {
           display: inline-block;
