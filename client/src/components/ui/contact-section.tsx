@@ -69,8 +69,6 @@ export function ContactSection() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
   const barcodeRef = useRef<HTMLDivElement>(null);
-  const socialsRef = useRef<HTMLUListElement>(null);
-  const footerSocialsRef = useRef<HTMLUListElement>(null);
   const copyLabelRef = useRef<HTMLSpanElement>(null);
   const toastRef = useRef<HTMLDivElement>(null);
   const toastMsgRef = useRef<HTMLSpanElement>(null);
@@ -88,7 +86,6 @@ export function ContactSection() {
   const nomeElRef = useRef<HTMLInputElement>(null);
 
   const [reducedMotion, setReducedMotion] = useState(false);
-  const [toastVisible, setToastVisible] = useState(false);
   const [formSubmitting, setFormSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
@@ -163,17 +160,7 @@ export function ContactSection() {
     barcodeRef.current.innerHTML = html;
   }, []);
 
-  // Socials
-  useEffect(() => {
-    const socialHTML = SOCIALS.map(
-      (s) => `
-      <li><a class="social" href="${s.href}" target="_blank" rel="noopener" aria-label="${s.name}" title="${s.name}">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${s.icon}</svg>
-      </a></li>`
-    ).join("");
-    if (socialsRef.current) socialsRef.current.innerHTML = socialHTML;
-    if (footerSocialsRef.current) footerSocialsRef.current.innerHTML = socialHTML;
-  }, []);
+  // Socials - rendered via JSX in the component, no useEffect needed
 
   // Copy email
   const copyEmail = useCallback(async () => {
@@ -200,10 +187,8 @@ export function ContactSection() {
     if (!toastMsgRef.current || !toastRef.current) return;
     toastMsgRef.current.textContent = msg;
     toastRef.current.classList.remove("translate-y-24", "opacity-0");
-    setToastVisible(true);
     setTimeout(() => {
       toastRef.current?.classList.add("translate-y-24", "opacity-0");
-      setToastVisible(false);
     }, 5000);
   }, []);
 
@@ -502,7 +487,17 @@ export function ContactSection() {
 
           <div>
             <p className="text-xs tracking-[.18em] uppercase text-navy/70 mb-4" style={{ fontFamily: '"DM Sans", sans-serif' }}>Redes sociais</p>
-            <ul ref={socialsRef} className="flex gap-3" />
+            <ul className="flex gap-3" aria-label="Redes sociais">
+              {SOCIALS.map((s) => (
+                <li key={s.name}>
+                  <a className="social" href={s.href} target="_blank" rel="noopener" aria-label={s.name} title={s.name}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      {s.icon}
+                    </svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className="text-sm text-navy/80 leading-relaxed" style={{ fontFamily: '"DM Sans", sans-serif' }}>
@@ -603,7 +598,17 @@ export function ContactSection() {
           <a href="#top" className="font-display font-extrabold text-2xl tracking-tight" style={{ fontFamily: '"Syne", sans-serif' }}>
             Atlas<span className="text-accent-dark">.</span>Dev
           </a>
-          <ul ref={footerSocialsRef} className="flex gap-3" />
+          <ul className="flex gap-3" aria-label="Redes sociais do rodapé">
+            {SOCIALS.map((s) => (
+              <li key={s.name}>
+                <a className="social" href={s.href} target="_blank" rel="noopener" aria-label={s.name} title={s.name}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    {s.icon}
+                  </svg>
+                </a>
+              </li>
+            ))}
+          </ul>
           <button ref={toTopBtnRef} type="button" onClick={scrollToTop} className="btn-lift self-start md:self-auto inline-flex items-center gap-2 rounded-full border border-navy px-5 py-2.5 text-sm font-medium hover:bg-navy hover:text-sand-light" style={{ fontFamily: '"DM Sans", sans-serif' }}>
             Voltar ao topo
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 19V5M5 12l7-7 7 7" /></svg>
