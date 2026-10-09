@@ -344,6 +344,12 @@ export function ContactSection() {
 
   return (
     <section className="ct-09 min-h-screen w-full overflow-x-hidden" id="contact" style={{ backgroundColor: "#e5d3b2", color: "#1d2557" }}>
+      <header className="cs-head">
+        <p className="text-xs font-bold uppercase tracking-[0.25em] text-navy">
+           09 - Contactos & CTA
+        </p>
+        <p className="cs-sub">Tens um projeto em mente? Vamos transformar a tua ideia em algo extraordinário.</p>
+      </header>
       <style>{`
         .ct-09 {
           font-family: "DM Sans", sans-serif;
@@ -351,6 +357,17 @@ export function ContactSection() {
           color: #1d2557;
         }
         .ct-09 ::selection { background: #f7a01e; color: #1d2557; }
+
+        .ct-09 .cs-head {
+          max-width: 1200px;
+          margin: 0 auto 32px;
+        }
+        .ct-09 .cs-sub {
+          margin: 0;
+          font-size: 1rem;
+          max-width: 60ch;
+          color: #1d2557;
+        }
 
         /* Marquee */
         .ct-09 .marquee-track { display: flex; width: max-content; animation: ct09-marquee 28s linear infinite; will-change: transform; }
