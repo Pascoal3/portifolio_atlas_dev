@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useCallback, useEffect, useRef } from "react";
+import { X } from "lucide-react";
+import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog";
 
 interface CaseStudy {
   id: string;
@@ -160,11 +162,7 @@ export function CaseStudiesSection() {
     }
   }, [lastFocused]);
 
-  const handleModalOverlayClick = useCallback((e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      closeAllModals();
-    }
-  }, [closeAllModals]);
+  const activeCase = CASE_STUDIES.find((cs) => cs.id === openModalId);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -173,6 +171,17 @@ export function CaseStudiesSection() {
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
   }, [closeAllModals]);
+
+  useEffect(() => {
+    if (openModalId) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [openModalId]);
 
   return (
     <section id="case-studies-section" aria-labelledby="cs-heading">
@@ -689,82 +698,6 @@ export function CaseStudiesSection() {
               </dl>
             </div>
 
-            <div className="cs-block-grid">
-              <section
-                className="cs-block cs-block--problem"
-                tabIndex={0}
-                aria-labelledby={`cs-h-problem-${cs.number}`}
-              >
-                <h4 id={`cs-h-problem-${cs.number}`} className="cs-block-title">
-                  PROBLEMA
-                </h4>
-                <ul>
-                  {cs.problem.map((item, i) => (
-                    <li key={i}>{item}</li>
-                  ))}
-                </ul>
-              </section>
-
-              <section
-                className="cs-block cs-block--process"
-                tabIndex={0}
-                aria-labelledby={`cs-h-process-${cs.number}`}
-              >
-                <h4 id={`cs-h-process-${cs.number}`} className="cs-block-title">
-                  PROCESSO
-                </h4>
-                <ol>
-                  {cs.process.map((item, i) => (
-                    <li key={i}>
-                      <span className="cs-num">{item.step}</span>
-                      <span>{item.description}</span>
-                    </li>
-                  ))}
-                </ol>
-              </section>
-
-              <section
-                className="cs-block cs-block--solution"
-                tabIndex={0}
-                aria-labelledby={`cs-h-solution-${cs.number}`}
-              >
-                <h4 id={`cs-h-solution-${cs.number}`} className="cs-block-title">
-                  SOLUÇÃO
-                </h4>
-                <div className="cs-tags">
-                  {cs.solution.tags.map((tag, i) => (
-                    <span key={i} className="cs-tag">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <ul>
-                  {cs.solution.features.map((item, i) => (
-                    <li key={i}>{item}</li>
-                  ))}
-                </ul>
-              </section>
-
-              <section
-                className="cs-block cs-block--result"
-                tabIndex={0}
-                aria-labelledby={`cs-h-result-${cs.number}`}
-              >
-                <h4 id={`cs-h-result-${cs.number}`} className="cs-block-title">
-                  RESULTADO
-                </h4>
-                <p className="cs-result-lead">{cs.result.lead}</p>
-                <div className="cs-mini">
-                  {cs.result.items.map((item, i) => (
-                    <div key={i} className="cs-mini-item">
-                      <strong>{item.label}</strong>
-                      <span>{item.description}</span>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            </div>
-
             <div className="cs-cta-row">
               <button
                 className="cs-cta"
@@ -778,55 +711,67 @@ export function CaseStudiesSection() {
         ))}
       </div>
 
-      {CASE_STUDIES.map((cs) => (
-        <div
-          key={cs.id}
-          className="cs-modal"
-          id={cs.id}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby={`cs-modal-title-${cs.number}`}
-          hidden={openModalId !== cs.id}
-          onClick={handleModalOverlayClick}
-        >
-          <div className="cs-modal-panel" tabIndex={-1}>
-            <div className="cs-modal-head">
-              <div>
-                <p className="cs-pill cs-pill--lime">CASE STUDY {cs.number}</p>
-                <h3 id={`cs-modal-title-${cs.number}`} className="cs-modal-title">
-                  {cs.title}
-                </h3>
-              </div>
+      {activeCase && (
+        <Dialog open={!!openModalId} onOpenChange={closeAllModals}>
+          <DialogOverlay className="bg-black/80 backdrop-blur-sm overflow-hidden" />
+          <DialogContent
+            className="w-full max-w-4xl max-h-[90vh] overflow-y-auto overflow-x-hidden bg-[#0a0a0a] border border-white/10 rounded-2xl p-6 sm:p-8 overscroll-contain"
+            showCloseButton={false}
+            aria-labelledby={`cs-modal-title-${activeCase.number}`}
+          >
+            <div className="flex justify-end mb-4">
               <button
                 type="button"
-                className="cs-close"
-                data-cs-close
+                className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white transition-colors"
+                aria-label="Fechar"
                 onClick={closeAllModals}
               >
-                Fechar
+                <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="cs-modal-body">
-              <section>
-                <h4>PROBLEMA</h4>
-                <p>{cs.modal.problem}</p>
+            <div className="space-y-6">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#C8FF00]">
+                  CASE STUDY {activeCase.number}
+                </p>
+                <h3 id={`cs-modal-title-${activeCase.number}`} className="mt-2 font-bold uppercase tracking-[-0.03em] leading-[0.9] text-4xl sm:text-5xl lg:text-6xl break-words overflow-wrap-anywhere max-w-full">
+                  {activeCase.title}
+                </h3>
+              </div>
+
+              <section className="border border-white/10 rounded-xl p-6 bg-white/5">
+                <h4 className="mb-4 font-bold uppercase tracking-[0.06em] text-lg">PROBLEMA</h4>
+                <p className="text-white/90 leading-relaxed">{activeCase.modal.problem}</p>
               </section>
-              <section>
-                <h4>PROCESSO</h4>
-                <p>{cs.modal.process}</p>
+
+              <section className="border border-white/10 rounded-xl p-6 bg-white/5">
+                <h4 className="mb-4 font-bold uppercase tracking-[0.06em] text-lg">PROCESSO</h4>
+                <p className="text-white/90 leading-relaxed">{activeCase.modal.process}</p>
               </section>
-              <section>
-                <h4>SOLUÇÃO</h4>
-                <p>{cs.modal.solution}</p>
+
+              <section className="border border-white/10 rounded-xl p-6 bg-white/5">
+                <h4 className="mb-4 font-bold uppercase tracking-[0.06em] text-lg">SOLUÇÃO</h4>
+                <p className="text-white/90 leading-relaxed">{activeCase.modal.solution}</p>
               </section>
-              <section>
-                <h4>RESULTADO</h4>
-                <p>{cs.modal.result}</p>
+
+              <section className="border border-white/10 rounded-xl p-6 bg-white/5">
+                <h4 className="mb-4 font-bold uppercase tracking-[0.06em] text-lg">RESULTADO</h4>
+                <p className="text-white/90 leading-relaxed">{activeCase.modal.result}</p>
               </section>
+
+              <div className="border-t border-white/10 pt-6">
+                <button
+                  type="button"
+                  className="w-full sm:w-auto font-bold text-base px-6 py-3 rounded-full border-2 border-white bg-white text-black hover:bg-black hover:text-white hover:border-white/50 transition-all duration-200"
+                  onClick={closeAllModals}
+                >
+                  Fechar
+                </button>
+              </div>
             </div>
-          </div>
-        </div>
-      ))}
+          </DialogContent>
+        </Dialog>
+      )}
     </section>
   );
 }
