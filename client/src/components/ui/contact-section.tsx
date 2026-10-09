@@ -69,7 +69,7 @@ export function ContactSection() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
   const barcodeRef = useRef<HTMLDivElement>(null);
-  const copyLabelRef = useRef<HTMLSpanElement>(null);
+  const copyLabelRef = useRef<HTMLButtonElement>(null);
   const toastRef = useRef<HTMLDivElement>(null);
   const toastMsgRef = useRef<HTMLSpanElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -253,7 +253,7 @@ export function ContactSection() {
     const honeypot = form.elements.namedItem("empresa") as HTMLInputElement;
     if (honeypot?.value) return; // bot
 
-    const ok = ["nome", "email", "tipo", "mensagem"].map(validateField).every(Boolean);
+    const ok = ["nome", "email", "tipo", "mensagem"].map((name) => validateField(name)).every(Boolean);
     if (!ok) {
       const first = form.querySelector('[aria-invalid="true"]') as HTMLElement | null;
       first?.scrollIntoView?.({ behavior: "smooth", block: "center" });
