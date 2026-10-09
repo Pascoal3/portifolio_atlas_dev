@@ -31,7 +31,7 @@ const CASE_STUDIES: CaseStudy[] = [
     title: "SKILLA.",
     subtitle: "FREELANCE PLATFORM · ANGOLA",
     role: "Produto + Desenvolvimento Full-stack",
-    stack: "Laravel · Blade · MySQL/PostgreSQL · WebSockets · Cron/Scheduler",
+    stack: "Laravel · Blade · MySQL · WebSockets · Cron Jobs",
     image: "/assets/skilla-home.png",
     imageAlt: "Screenshot da homepage da Skilla",
     description: "Uma plataforma freelance voltada ao mercado angolano para conectar clientes e freelancers com mais confiança, organização e segurança nos pagamentos.",
@@ -42,7 +42,7 @@ const CASE_STUDIES: CaseStudy[] = [
       "Falta de disputas, auditoria e rastreabilidade financeira.",
     ],
     process: [
-      { step: "01", description: "Mapeamento do fluxo: job → proposta → contrato → entrega → aprovação/disputa → avaliação." },
+      { step: "01", description: "Mapeamento do fluxo: desde encontrar trabalhos até a avaliação." },
       { step: "02", description: "Modelagem de dados para auditoria, histórico e transações." },
       { step: "03", description: "Regras para retenção, liberação, reembolso e expiração." },
       { step: "04", description: "Desenvolvimento modular: perfis → jobs → contratos → financeiro → chat → automações." },
@@ -238,13 +238,15 @@ export function CaseStudiesSection() {
         #case-studies-section .cs-topbar {
           display: flex;
           align-items: center;
-          justify-content: space-between;
+          justify-content: center;
+          min-height: 40px;
           background: var(--cs-navy);
           color: #fff;
           border-radius: 999px;
           padding: 5px;
         }
         #case-studies-section .cs-topbar-label {
+        margin-left: 8px;
           font-weight: 700;
           font-size: .66rem;
           letter-spacing: .1em;
@@ -515,13 +517,13 @@ export function CaseStudiesSection() {
           padding: 13px 22px;
           border-radius: 999px;
           border: 2px solid var(--cs-ink);
-          background: var(--cs-ink);
-          color: var(--cs-lime);
+          background: var(--cs-lime);
+          color: var(--cs-ink);
           transition: background .2s, color .2s, transform .2s;
         }
         #case-studies-section .cs-cta:hover {
-          background: var(--cs-lime);
-          color: var(--cs-ink);
+          background: var(--cs-ink);
+          color: var(--cs-lime);
           transform: translateY(-2px);
         }
         #case-studies-section .cs-modal {
@@ -665,14 +667,7 @@ export function CaseStudiesSection() {
           <article key={cs.id} className="cs-card">
             <div className="cs-topbar">
               <span className="cs-topbar-label">{cs.subtitle}</span>
-              <button
-                className="cs-round"
-                type="button"
-                aria-label={`Ver detalhes do case ${cs.number}`}
-                onClick={() => openModal(cs.id)}
-              >
-                ↗
-              </button>
+              
             </div>
 
             <figure className="cs-shot">
@@ -776,7 +771,7 @@ export function CaseStudiesSection() {
                 type="button"
                 onClick={() => openModal(cs.id)}
               >
-                Ver detalhes do case ↗
+                Ver detalhes do case
               </button>
             </div>
           </article>
