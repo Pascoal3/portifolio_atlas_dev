@@ -6,6 +6,7 @@ import { InteractiveHoverLinks, type InteractiveLinkItem } from "@/components/ui
 import { ProcessBento } from "@/components/ui/process-bento";
 import { StackMarquee } from "@/components/ui/stack-marquee";
 import { CaseStudiesSection } from "@/components/ui/case-studies-section";
+import { ContactSection } from "@/components/ui/contact-section";
 import { Globe, Layout, Palette, Brush, Zap, Monitor } from "lucide-react";
 
 const WORKS: WorksWheelItem[] = [
@@ -186,7 +187,6 @@ export default function Home() {
 
         <span id="work" className="anchor-target" />
         <span id="about" className="anchor-target" />
-        <span id="contact" className="anchor-target" />
       </main>
       <WorksWheel
         id="works"
@@ -354,6 +354,15 @@ export default function Home() {
           style={{ backgroundColor: '#F5F4EE', color: '#0B0B0B' }}
         >
           <CaseStudiesSection />
+        </FlowSection>
+
+        {/* SEÇÃO 9: Contactos & CTA */}
+        <FlowSection
+          id="contact"
+          aria-label="Contactos & CTA"
+          style={{ backgroundColor: '#e5d3b2', color: '#1d2557' }}
+        >
+          <ContactSection />
         </FlowSection>
       </FlowArt>
     </>
