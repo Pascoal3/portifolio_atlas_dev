@@ -94,6 +94,12 @@ export default function Home() {
   const [revealPoint, setRevealPoint] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
+
+  useEffect(() => {
     let animationFrame = 0;
 
     const followCursor = () => {
@@ -331,7 +337,7 @@ export default function Home() {
 
         {/* SEÇÃO 6: Processo */}
         <FlowSection
-          id="processo"
+          id="processo-detalhado"
           aria-label="Processo de Desenvolvimento"
           style={{ backgroundColor: '#000000', color: '#ffffff' }}
         >
