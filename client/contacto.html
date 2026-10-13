@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contacto — Atlas Dev</title>
+  <meta name="description" content="Tem um projeto em mente? Vamos transformar a tua ideia em algo extraordinário." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sand: { DEFAULT: '#e5d3b2', light: '#efe2c8', dark: '#d6bf98' },
+            navy: { DEFAULT: '#1d2557', soft: '#3a4278' },
+            accent: { DEFAULT: '#f7a01e', dark: '#e08c0c' },
+          },
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            body: ['"DM Sans"', 'sans-serif'],
+          },
+          keyframes: {
+            marquee: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } },
+            rise: { '0%': { opacity: 0, transform: 'translateY(24px)' }, '100%': { opacity: 1, transform: 'translateY(0)' } },
+            ping2: { '75%,100%': { transform: 'scale(2.4)', opacity: 0 } },
+          },
+          animation: {
+            marquee: 'marquee 28s linear infinite',
+            rise: 'rise .8s cubic-bezier(.2,.7,.2,1) both',
+            ping2: 'ping2 1.8s cubic-bezier(0,0,.2,1) infinite',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background: #e5d3b2; color: #1d2557; font-family: 'DM Sans', sans-serif; }
+    ::selection { background: #f7a01e; color: #1d2557; }
+
+    /* Underline inputs with curly-brace placeholders */
+    .field {
+      width: 100%;
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid rgba(29, 37, 87, .55);
+      padding: .55rem 0;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+      color: #1d2557;
+      outline: none;
+      border-radius: 0;
+      transition: border-color .25s ease;
+    }
+    .field::placeholder { color: rgba(29, 37, 87, .55); font-weight: 600; transition: opacity .25s ease, transform .25s ease; }
+    .field:focus::placeholder { opacity: .35; transform: translateX(6px); }
+    textarea.field { resize: none; min-height: 7.5rem; line-height: 1.3; }
+    select.field { appearance: none; cursor: pointer; }
+
+    .underline-wrap { position: relative; }
+    .underline-wrap::after {
+      content: ''; position: absolute; left: 0; bottom: 0; height: 2px; width: 100%;
+      background: #f7a01e; transform: scaleX(0); transform-origin: left; transition: transform .35s ease;
+    }
+    .underline-wrap:focus-within::after { transform: scaleX(1); }
+    .underline-wrap.has-error .field { border-bottom-color: #c0392b; }
+
+    .err { color: #b3261e; font-size: .8rem; margin-top: .35rem; min-height: 1.1rem; }
+
+    .chip input { position: absolute; opacity: 0; pointer-events: none; }
+    .chip span {
+      display: inline-block; padding: .5rem 1rem; border-radius: 999px;
+      border: 1px solid rgba(29, 37, 87, .55); font-size: .85rem; font-weight: 500;
+      cursor: pointer; transition: all .2s ease; user-select: none;
+    }
+    .chip span:hover { transform: translateY(-2px); border-color: #1d2557; }
+    .chip input:checked + span { background: #1d2557; color: #efe2c8; border-color: #1d2557; }
+    .chip input:focus-visible + span { outline: 2px solid #f7a01e; outline-offset: 2px; }
+
+    .btn-lift { transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease; }
+    .btn-lift:hover { transform: translateY(-3px); box-shadow: 0 10px 22px -8px rgba(29, 37, 87, .45); }
+    .btn-lift:active { transform: translateY(0); }
+
+    .social {
+      width: 44px; height: 44px; border-radius: 999px; display: grid; place-items: center;
+      border: 1px solid rgba(29, 37, 87, .6); transition: all .25s ease;
+    }
+    .social:hover { background: #1d2557; color: #efe2c8; transform: translateY(-3px) rotate(-6deg); }
+
+    .spinner {
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 2px solid rgba(29, 37, 87, .3); border-top-color: #1d2557;
+      animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+    .reveal.in { opacity: 1; transform: none; }
+
+    :focus-visible { outline: 2px solid #f7a01e; outline-offset: 3px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen overflow-x-hidden">
+  <!-- Pixel mosaic background -->
+  <canvas id="pixels" class="fixed inset-0 -z-10 w-full h-full" aria-hidden="true"></canvas>
+
+  <main id="contacto">
+    <!-- 1. HERO -->
+    <section id="top" class="px-5 md:px-8 pt-6 md:pt-10 pb-8">
+      
+
+      <h1 class="font-display font-extrabold uppercase leading-[.9] tracking-tight text-navy animate-rise"
+          style="font-size: clamp(1rem, 9.2vw, 5rem); animation-delay:.08s">
+        Tem um projeto<br />em mente?
+      </h1>
+
+      <div class="mt-8 grid md:grid-cols-2 gap-4 md:gap-10 max-w-5xl animate-rise" style="animation-delay:.18s">
+        <p class="font-display font-bold text-xl md:text-2xl leading-snug">Vamos transformar a tua ideia em algo extraordinário.</p>
+        <p class="text-base md:text-lg text-navy/80">Conta-me o que estás a imaginar e vamos construir algo juntos.</p>
+      </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="overflow-hidden border-y border-navy/20 py-3 my-6 select-none" aria-hidden="true">
+      <div class="flex w-max animate-marquee text-xs tracking-[.2em] uppercase font-medium" id="marquee"></div>
+    </div>
+
+    <!-- 2. MAIN AREA -->
+    <section class="px-5 md:px-8 py-8 md:py-14 grid lg:grid-cols-12 gap-12 lg:gap-10">
+
+      <!-- LEFT: direct contact + social -->
+      <aside class="lg:col-span-4 order-2 lg:order-1 space-y-10 reveal">
+        <div>
+          <p class="text-xs tracking-[.18em] uppercase text-navy/70 mb-3">Contacto direto</p>
+          <a id="emailLink" href="mailto:contacto@atlasdev.com" class="font-display font-bold text-xl md:text-2xl break-all hover:text-accent-dark transition-colors">contacto@atlasdev.com</a>
+
+          <div class="flex flex-wrap gap-3 mt-5">
+            <button id="copyBtn" type="button" class="btn-lift inline-flex items-center gap-2 rounded-full border border-navy px-4 py-2 text-sm font-medium hover:bg-navy hover:text-sand-light">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span id="copyLabel">Copiar email</span>
+            </button>
+            <a href="mailto:contacto@atlasdev.com?subject=Novo%20projeto" class="btn-lift inline-flex items-center gap-2 rounded-full border border-navy px-4 py-2 text-sm font-medium hover:bg-navy hover:text-sand-light">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+              Abrir no email
+            </a>
+          </div>
+
+          <a href="https://wa.me/244900000000?text=Ol%C3%A1!%20Tenho%20um%20projeto%20em%20mente."
+             target="_blank" rel="noopener"
+             class="btn-lift mt-5 inline-flex items-center gap-3 rounded-full bg-[#25D366] text-navy px-6 py-3 font-bold hover:bg-[#1fbd5a]">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.6 4.1 1.6 5.9L0 24l6.4-1.7a11.9 11.9 0 0 0 5.6 1.4c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.4-8.3ZM12 21.7c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 0 1-1.5-5.2C2.1 6.4 6.6 2 12 2c2.6 0 5.1 1 6.9 2.9a9.7 9.7 0 0 1 2.9 6.9c0 5.4-4.4 9.9-9.8 9.9Zm5.4-7.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1l-.9 1.1c-.2.2-.3.2-.6.1a8 8 0 0 1-4-3.5c-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.4-.5-.6-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.6.7.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3Z"/></svg>
+            Falar no WhatsApp
+          </a>
+
+          <!-- decorative barcode (echoes the reference) -->
+          <div class="mt-8 inline-block" aria-hidden="true" style="display: hidden !important;">
+            <div id="barcode" class="flex items-end h-12 gap-[2px]"></div>
+            <p class="text-[10px] tracking-[.25em] mt-1">+244 900 000 000</p>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs tracking-[.18em] uppercase text-navy/70 mb-4">Redes sociais</p>
+          <ul class="flex gap-3" id="socials"></ul>
+        </div>
+
+        <div class="text-sm text-navy/80 leading-relaxed">
+          <p class="font-bold text-navy">Atlas Dev</p>
+          <p>Angola</p>
+        </div>
+      </aside>
+
+      <!-- RIGHT: form -->
+      <div class="lg:col-span-8 order-1 lg:order-2 reveal" style="transition-delay:.1s">
+        <div class="relative">
+          <form id="contactForm" novalidate class="grid gap-9 max-w-3xl lg:ml-auto">
+            <!-- honeypot -->
+            <input type="text" name="empresa" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+
+            <div class="grid md:grid-cols-2 gap-9">
+              <div>
+                <label for="nome" class="block text-xs font-medium mb-1">Quem és tu?</label>
+                <div class="underline-wrap" data-field="nome">
+                  <input id="nome" name="nome" type="text" class="field" placeholder="{ o teu nome }" autocomplete="name" required />
+                </div>
+                <p class="err" data-err="nome" aria-live="polite"></p>
+              </div>
+              <div>
+                <label for="email" class="block text-xs font-medium mb-1">Como comunicamos?</label>
+                <div class="underline-wrap" data-field="email">
+                  <input id="email" name="email" type="email" class="field" placeholder="{ o teu email }" autocomplete="email" required />
+                </div>
+                <p class="err" data-err="email" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <fieldset>
+              <legend class="block text-xs font-medium mb-3">Tipo de projeto</legend>
+              <div class="flex flex-wrap gap-2.5" id="chips">
+                <label class="chip"><input type="radio" name="tipo" value="Desenvolvimento de website" /><span>Desenvolvimento de website</span></label>
+                <label class="chip"><input type="radio" name="tipo" value="Landing page" /><span>Landing page</span></label>
+                <label class="chip"><input type="radio" name="tipo" value="Design UI/UX" /><span>Design UI/UX</span></label>
+                <label class="chip"><input type="radio" name="tipo" value="Automação com IA" /><span>Automação com IA</span></label>
+                <label class="chip"><input type="radio" name="tipo" value="Outro" /><span>Outro</span></label>
+              </div>
+              <p class="err" data-err="tipo" aria-live="polite"></p>
+            </fieldset>
+
+            <div>
+              <label for="orcamento" class="block text-xs font-medium mb-1">Orçamento estimado <span class="text-navy/60 font-normal">(opcional)</span></label>
+              <div class="underline-wrap relative">
+                <select id="orcamento" name="orcamento" class="field">
+                  <option value="">{ seleciona um intervalo }</option>
+                  <option>Até 100 000 Kz</option>
+                  <option>100 000 – 300 000 Kz</option>
+                  <option>300 000 – 800 000 Kz</option>
+                  <option>Acima de 800 000 Kz</option>
+                  <option>Ainda não sei</option>
+                </select>
+                <svg class="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              </div>
+            </div>
+
+            <div>
+              <label for="mensagem" class="block text-xs font-medium mb-1">Descrição do projeto</label>
+              <div class="underline-wrap" data-field="mensagem">
+                <textarea id="mensagem" name="mensagem" class="field" placeholder="{ conta-me a tua ideia }" required></textarea>
+              </div>
+              <div class="flex justify-between">
+                <p class="err" data-err="mensagem" aria-live="polite"></p>
+                <span id="count" class="text-xs text-navy/60 mt-1">0 / 1000</span>
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <button id="submitBtn" type="submit"
+                class="btn-lift relative inline-flex items-center justify-center gap-3 min-w-[240px] rounded-full bg-accent hover:bg-accent-dark text-navy font-bold text-sm tracking-[.14em] uppercase px-10 py-4 disabled:opacity-80 disabled:cursor-wait disabled:hover:translate-y-0">
+                <span id="btnSpinner" class="spinner hidden"></span>
+                <span id="btnLabel">Vamos conversar</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- Success state -->
+          <div id="success" class="hidden max-w-3xl lg:ml-auto rounded-3xl border border-navy/30 bg-sand-light/70 backdrop-blur p-8 md:p-12 text-center" role="status">
+            <div class="mx-auto w-16 h-16 rounded-full bg-accent grid place-items-center mb-6">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1d2557" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" id="checkPath" style="stroke-dasharray:30;stroke-dashoffset:30;transition:stroke-dashoffset .6s .2s ease"/></svg>
+            </div>
+            <h2 class="font-display font-extrabold text-3xl md:text-4xl uppercase">Mensagem enviada!</h2>
+            <p class="mt-3 text-navy/80">Obrigado pelo contacto. Respondo-te em breve — normalmente em 24 horas.</p>
+            <button id="again" type="button" class="btn-lift mt-8 rounded-full border border-navy px-6 py-2.5 text-sm font-medium hover:bg-navy hover:text-sand-light">Enviar outra mensagem</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 7. FOOTER -->
+  <footer class="px-5 md:px-8 pt-10 pb-8 mt-10 border-t border-navy/20">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-8">
+      <a href="#top" class="font-display font-extrabold text-2xl tracking-tight">Atlas<span class="text-accent-dark">.</span>Dev</a>
+      <ul class="flex gap-3" id="footerSocials"></ul>
+      <button id="toTop" type="button" class="btn-lift self-start md:self-auto inline-flex items-center gap-2 rounded-full border border-navy px-5 py-2.5 text-sm font-medium hover:bg-navy hover:text-sand-light">
+        Voltar ao topo
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+      </button>
+    </div>
+    <div class="mt-8 flex flex-col sm:flex-row justify-between gap-2 text-xs text-navy/70">
+      <p>© <span id="year">2026</span> Atlas Dev. Todos os direitos reservados.</p>
+      <p>Angola 🇦🇴</p>
+    </div>
+  </footer>
+
+  <!-- Toast (error / feedback) -->
+  <div id="toast" class="fixed left-1/2 bottom-6 -translate-x-1/2 translate-y-24 opacity-0 transition-all duration-300 z-50 max-w-[92vw] rounded-2xl bg-navy text-sand-light px-5 py-3.5 text-sm shadow-xl flex items-center gap-3" role="alert">
+    <span class="w-2.5 h-2.5 rounded-full bg-red-400 shrink-0"></span>
+    <span id="toastMsg"></span>
+  </div>
+
+  <script>
+    /* ====== CONFIG (edita aqui) ====== */
+    const CONFIG = {
+      email: 'contacto@atlasdev.com',
+      whatsapp: '244900000000', // sem + nem espaços
+      socials: [
+        { name: 'Instagram', href: 'https://instagram.com/atlasdev', icon: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>' },
+        { name: 'LinkedIn',  href: 'https://linkedin.com/in/atlasdev', icon: '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>' },
+        { name: 'WhatsApp',  href: 'https://wa.me/244900000000', icon: '<path d="M3 21l1.65-4.9A9 9 0 1 1 8 19.4L3 21Z"/><path d="M9 10c0 3 2 5 5 5l1.5-1.5-2-1-1 .8a3.5 3.5 0 0 1-1.6-1.6l.8-1-1-2L9 10Z" fill="currentColor"/>' },
+        { name: 'GitHub',    href: 'https://github.com/atlasdev', icon: '<path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.1-.3 6.4-1.5 6.4-7a5.4 5.4 0 0 0-1.5-3.8 5 5 0 0 0-.1-3.7s-1.2-.4-3.9 1.4a13.4 13.4 0 0 0-7 0C6.2 2.8 5 3.2 5 3.2a5 5 0 0 0-.1 3.7A5.4 5.4 0 0 0 3.500 10.700c0 5.400 3.300 6.600 6.400 7a3.400 3.400 0 0 0-1 2.600V22"/>' },
+      ],
+      // Se tiveres um endpoint (Formspree, Resend, o teu backend...), coloca aqui.
+      // Vazio = envio simulado para demonstração.
+      endpoint: '',
+    };
+
+    const $ = (s, r = document) => r.querySelector(s);
+    const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+    /* ====== Pixel mosaic background ====== */
+    const canvas = $('#pixels');
+    const ctx = canvas.getContext('2d');
+    function drawPixels() {
+      const size = 46, dpr = window.devicePixelRatio || 1;
+      const w = window.innerWidth, h = window.innerHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.fillStyle = '#e5d3b2'; ctx.fillRect(0, 0, w, h);
+      for (let y = 0; y < h; y += size) {
+        for (let x = 0; x < w; x += size) {
+          const r = Math.random();
+          if (r < .55) continue;
+          ctx.fillStyle = r > .8 ? `rgba(255,247,230,${.12 + Math.random() * .22})` : `rgba(150,115,70,${.05 + Math.random() * .12})`;
+          ctx.fillRect(x, y, size, size);
+        }
+      }
+    }
+    drawPixels();
+    let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(drawPixels, 200); });
+
+    /* ====== Marquee ====== */
+    const words = ['Website', 'Landing Page', 'UI/UX', 'Automação com IA', 'Desenvolvimento', 'Design', 'Freelance'];
+    const unit = words.map(w => `<span class="px-6">${w}</span><span class="text-accent-dark">✦</span>`).join('');
+    $('#marquee').innerHTML = `<div class="flex items-center">${unit.repeat(3)}</div><div class="flex items-center">${unit.repeat(3)}</div>`;
+
+    /* ====== Barcode ====== */
+    (function () {
+      const el = $('#barcode'); let html = '';
+      for (let i = 0; i < 42; i++) html += `<span style="display:block;height:100%;width:${[1, 1, 2, 3][Math.floor(Math.random() * 4)]}px;background:#1d2557"></span>`;
+      el.innerHTML = html;
+    })();
+
+    /* ====== Socials ====== */
+    const socialHTML = CONFIG.socials.map(s => `
+      <li><a class="social" href="${s.href}" target="_blank" rel="noopener" aria-label="${s.name}" title="${s.name}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${s.icon}</svg>
+      </a></li>`).join('');
+    $('#socials').innerHTML = socialHTML;
+    $('#footerSocials').innerHTML = socialHTML;
+
+    /* ====== Copy email ====== */
+    $('#copyBtn').addEventListener('click', async () => {
+      const label = $('#copyLabel');
+      try {
+        await navigator.clipboard.writeText(CONFIG.email);
+      } catch {
+        const t = document.createElement('textarea'); t.value = CONFIG.email; document.body.appendChild(t); t.select();
+        document.execCommand('copy'); t.remove();
+      }
+      label.textContent = 'Copiado!';
+      setTimeout(() => (label.textContent = 'Copiar email'), 1800);
+    });
+
+    /* ====== Toast ====== */
+    let toastTimer;
+    function toast(msg) {
+      $('#toastMsg').textContent = msg;
+      const t = $('#toast');
+      t.classList.remove('translate-y-24', 'opacity-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.add('translate-y-24', 'opacity-0'), 5000);
+    }
+
+    /* ====== Form validation ====== */
+    const form = $('#contactForm');
+    const rules = {
+      nome: v => v.trim().length >= 2 || 'Por favor, diz-me o teu nome.',
+      email: v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) || 'Por favor, insere um email válido.',
+      tipo: () => !!form.querySelector('input[name="tipo"]:checked') || 'Seleciona o tipo de projeto.',
+      mensagem: v => v.trim().length >= 10 || 'Descreve o projeto com pelo menos 10 caracteres.',
+    };
+    const getVal = n => n === 'tipo' ? (form.querySelector('input[name="tipo"]:checked')?.value || '') : form.elements[n].value;
+
+    function validateField(name) {
+      const res = rules[name](getVal(name));
+      const msg = res === true ? '' : res;
+      $(`[data-err="${name}"]`).textContent = msg;
+      const wrap = $(`[data-field="${name}"]`);
+      if (wrap) wrap.classList.toggle('has-error', !!msg);
+      const input = form.elements[name];
+      if (input && input.setAttribute) input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+      return !msg;
+    }
+
+    ['nome', 'email', 'mensagem'].forEach(n => {
+      form.elements[n].addEventListener('blur', () => validateField(n));
+      form.elements[n].addEventListener('input', () => { if ($(`[data-err="${n}"]`).textContent) validateField(n); });
+    });
+    $$('input[name="tipo"]').forEach(r => r.addEventListener('change', () => validateField('tipo')));
+
+    const msgEl = form.elements.mensagem;
+    msgEl.setAttribute('maxlength', 1000);
+    msgEl.addEventListener('input', () => {
+      $('#count').textContent = `${msgEl.value.length} / 1000`;
+      msgEl.style.height = 'auto'; msgEl.style.height = msgEl.scrollHeight + 'px';
+    });
+
+    /* ====== Submit ====== */
+    const btn = $('#submitBtn'), spinner = $('#btnSpinner'), label = $('#btnLabel');
+    function setLoading(on) {
+      btn.disabled = on; spinner.classList.toggle('hidden', !on);
+      label.textContent = on ? 'A enviar...' : 'Vamos conversar';
+    }
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      if (form.elements.empresa.value) return; // bot
+      const ok = Object.keys(rules).map(validateField).every(Boolean);
+      if (!ok) {
+        const first = form.querySelector('[aria-invalid="true"]') || form.querySelector('.err:not(:empty)');
+        first?.scrollIntoView?.({ behavior: 'smooth', block: 'center' });
+        first?.focus?.();
+        return;
+      }
+
+      setLoading(true);
+      const data = Object.fromEntries(new FormData(form));
+      delete data.empresa;
+
+      try {
+        if (CONFIG.endpoint) {
+          const res = await fetch(CONFIG.endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify(data),
+          });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+        } else {
+          await new Promise(r => setTimeout(r, 1600)); // simulação
+          console.log('Dados do formulário (simulado):', data);
+        }
+        showSuccess();
+      } catch (err) {
+        console.error(err);
+        toast('Algo correu mal. Tenta novamente ou contacta-me por email.');
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    function showSuccess() {
+      form.classList.add('hidden');
+      const box = $('#success');
+      box.classList.remove('hidden');
+      box.animate([{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }], { duration: 500, easing: 'ease-out' });
+      requestAnimationFrame(() => ($('#checkPath').style.strokeDashoffset = 0));
+      box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    $('#again').addEventListener('click', () => {
+      form.reset(); $('#count').textContent = '0 / 1000'; msgEl.style.height = '';
+      $$('[data-err]').forEach(e => (e.textContent = ''));
+      $$('.underline-wrap').forEach(w => w.classList.remove('has-error'));
+      $('#checkPath').style.strokeDashoffset = 30;
+      $('#success').classList.add('hidden'); form.classList.remove('hidden');
+      $('#nome').focus();
+    });
+
+    /* ====== Footer, scroll reveal, back to top ====== */
+    $('#year').textContent = new Date().getFullYear();
+    $('#toTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: .12 });
+    $$('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>

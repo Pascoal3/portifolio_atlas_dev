@@ -214,7 +214,7 @@ export function ContactSection() {
         if (!form.querySelector('input[name="tipo"]:checked')) msg = "Seleciona o tipo de projeto.";
         break;
       case "mensagem":
-        if (val.trim().length < 10) msg = "Descreve o projeto com pelo menos 10 caracteres.";
+        if (val.trim().length < 10) msg = "Descreva o projeto com pelo menos 10 caracteres.";
         break;
     }
     setFormErrors((prev) => ({ ...prev, [name]: msg }));
@@ -331,7 +331,7 @@ export function ContactSection() {
     <section className="ct-09 min-h-screen w-full overflow-x-hidden" id="contact" style={{ backgroundColor: "#e5d3b2", color: "#1d2557" }}>
       <header className="cs-head">
         <p className="text-xs font-bold uppercase tracking-[0.25em] text-navy">
-           09 - Contactos & CTA
+           09 - Contactos
         </p>
         <p className="cs-sub">Tens um projeto em mente? Vamos transformar a tua ideia em algo extraordinário.</p>
       </header>
@@ -432,8 +432,8 @@ export function ContactSection() {
       {/* 1. HERO */}
       <section id="top" className="px-5 md:px-8 pt-6 md:pt-10 pb-8">
         <h1 className="font-display font-extrabold uppercase leading-[.9] tracking-tight text-navy animate-rise"
-            style={{ fontFamily: '"Syne", sans-serif', fontSize: "clamp(1rem, 9.2vw, 5rem)", animationDelay: "0.08s" }}>
-          Tem um projeto<br />em mente?
+            style={{ fontFamily: '"Syne", sans-serif', fontSize: "clamp(1rem, 9.2vw, 4rem)", animationDelay: "0.08s" }}>
+          Tem um projeto em mente?
         </h1>
 
         <div className="mt-8 grid md:grid-cols-2 gap-4 md:gap-10 max-w-5xl animate-rise" style={{ animationDelay: "0.18s" }}>
@@ -471,7 +471,7 @@ export function ContactSection() {
               </a>
             </div>
 
-            <a href="https://wa.me/244900000000?text=Ol%C3%A1!%20Tenho%20um%20projeto%20em%20mente."
+            <a href="https://wa.me/244933621858?text=Ol%C3%A1%2C%20vim%20do%20teu%20portf%C3%B3lio%2C%20estou%20interessado%20em%20tirar%20uma%20ideia%20do%20papel%21"
                target="_blank" rel="noopener"
                className="btn-lift mt-5 inline-flex items-center gap-3 rounded-full bg-[#25D366] text-navy px-6 py-3 font-bold hover:bg-[#1fbd5a]" style={{ fontFamily: '"DM Sans", sans-serif' }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.6 4.1 1.6 5.9L0 24l6.4-1.7a11.9 11.9 0 0 0 5.6 1.4c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.4-8.3ZM12 21.7c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 0 1-1.5-5.2C2.1 6.4 6.6 2 12 2c2.6 0 5.1 1 6.9 2.9a9.7 9.7 0 0 1 2.9 6.9c0 5.4-4.4 9.9-9.8 9.9Zm5.4-7.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1l-.9 1.1c-.2.2-.3.2-.6.1a8 8 0 0 1-4-3.5c-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.4-.5-.6-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.6.7.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3Z"/></svg>

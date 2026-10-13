@@ -666,9 +666,9 @@ export function CaseStudiesSection() {
 
       <header className="cs-head">
         <p className="text-xs font-bold uppercase tracking-[0.25em] text-black">
-           08 - Caso de estudos e Resultados
+           08 - Casos de estudo e Resultados
         </p>
-        <p className="cs-sub">Projetos reais, contados pelo problema, pelo processo e pelo impacto.</p>
+        <p className="cs-sub"><br /> Projetos reais, contados pelo problema, pelo processo e pelo impacto.</p>
       </header>
 
       <div className="cs-grid">
